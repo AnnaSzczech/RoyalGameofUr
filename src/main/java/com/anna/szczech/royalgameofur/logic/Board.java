@@ -1,11 +1,10 @@
 package com.anna.szczech.royalgameofur.logic;
 
+import com.anna.szczech.royalgameofur.GUI.Pawns;
 import com.anna.szczech.royalgameofur.result.Points;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.control.Label;
-
-import java.awt.*;
 
 public class Board {
     private Player computerPawns;
@@ -14,6 +13,9 @@ public class Board {
     private boolean isUserTurn = true;
     private Points result = new Points();
     private Label resultLabel;
+    public Pawns selectedPawn;
+    public Pawns capturedPawn = null;
+    public boolean isEndGame = false;
 
     public Board(){
         computerPawns = new Computer(this);
@@ -59,4 +61,5 @@ public class Board {
     public Points getResult() {
         return result;
     }
+
 }

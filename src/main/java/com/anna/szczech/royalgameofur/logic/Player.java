@@ -11,21 +11,16 @@ import java.util.List;
 import java.util.Map;
 
 public interface Player {
-    Image getImage();
     List<Pawns> getPawns();
 
-    void createPlayerPawns(Board board);
     Map<LocalizationOnBoard, Integer> getLocalizationOnBoard();
 
-    default List<Pawns> createPawns(Image image, int numberOfPawns, double locationX, Board board){
+
+    default List<Pawns> createPawns(Image image, int numberOfPawns, Board board, Object playerClass){
         List<Pawns> pawns = new ArrayList<>();
-        double locationY = 110;
         for (int i = 0; i < numberOfPawns; i++){
-            Pawns pawn = new Pawns(new ImageView(image), board);
-            pawn.setLayoutX(locationX);
-            pawn.setLayoutY(locationY);
+            Pawns pawn = new Pawns(new ImageView(image), board, playerClass);
             pawns.add(pawn);
-            locationY += 100;
         }
         return pawns;
     }

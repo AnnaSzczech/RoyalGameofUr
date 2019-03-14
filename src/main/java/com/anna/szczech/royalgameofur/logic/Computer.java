@@ -14,14 +14,9 @@ public class Computer implements Player {
     private List<Pawns> pawns = new ArrayList<>();
     private Map<LocalizationOnBoard, Integer> localizationOnBoard = new HashMap<>();
 
-    public Computer(Board board) {
-        createPlayerPawns(board);
-    }
 
-    public void createPlayerPawns(Board board){
-        int numberOfPawns = 7;
-        double locationX = 1350;
-        pawns = createPawns(image, numberOfPawns,  locationX, board);
+    public Computer(Board board) {
+        pawns = createPawns(image, 7, board, this.getClass());
         setLocalizationOnBoard();
     }
 
@@ -44,9 +39,5 @@ public class Computer implements Player {
 
     public List<Pawns> getPawns() {
         return pawns;
-    }
-
-    public Image getImage() {
-        return image;
     }
 }

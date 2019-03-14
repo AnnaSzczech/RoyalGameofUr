@@ -14,14 +14,9 @@ public class User implements Player {
     private List<Pawns> pawns = new ArrayList<>();
     private Map<LocalizationOnBoard, Integer> localizationOnBoard = new HashMap<>();
 
-    public User(Board board) {
-        createPlayerPawns(board);
-    }
 
-    public void createPlayerPawns(Board board){
-        int numberOfPawns = 7;
-        double locationX = 150;
-        pawns = createPawns(image, numberOfPawns, locationX, board);
+    public User(Board board) {
+        pawns = createPawns(image, 7, board, this.getClass());
         setLocalizationOnBoard();
     }
 
@@ -29,9 +24,6 @@ public class User implements Player {
         return pawns;
     }
 
-    public Image getImage() {
-        return image;
-    }
 
     public void setLocalizationOnBoard(){
         localizationOnBoard.put(new LocalizationOnBoard(720, 315), 1);
