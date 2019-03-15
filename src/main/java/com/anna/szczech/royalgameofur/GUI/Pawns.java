@@ -1,7 +1,6 @@
 package com.anna.szczech.royalgameofur.GUI;
 
-import com.anna.szczech.royalgameofur.logic.Board;
-import com.anna.szczech.royalgameofur.logic.Move;
+import com.anna.szczech.royalgameofur.logic.Round;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
@@ -13,17 +12,14 @@ public class Pawns extends Label {
         super("", graphic);
         this.playerClass = playerClass;
         this.setOnMouseClicked(event -> {
-            if (!board.isEndGame  && board.getMove() != 0) {
-                new Move(board, this);
-
-////                movePawn();
-//                checkIfPawnHaveToBackToTheBox();
-
-//                board.setUserTurn(false);
-//                ComputerLogic computerLogic = new ComputerLogic(board);
-//                computerLogic.run();
-            }
+            movePawn(board);
         });
+    }
+
+    private void movePawn(Board board){
+        if (!board.isEndGame  && board.getMove() != 0) {
+            new Round(board, this);
+        }
     }
 
     public int getLocation() {

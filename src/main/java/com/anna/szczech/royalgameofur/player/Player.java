@@ -1,7 +1,8 @@
-package com.anna.szczech.royalgameofur.logic;
+package com.anna.szczech.royalgameofur.player;
 
 import com.anna.szczech.royalgameofur.GUI.LocalizationOnBoard;
 import com.anna.szczech.royalgameofur.GUI.Pawns;
+import com.anna.szczech.royalgameofur.GUI.Board;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
