@@ -1,5 +1,7 @@
 package com.anna.szczech.royalgameofur.GUI;
 
+//import com.anna.szczech.royalgameofur.logic.ComputerLogic;
+import com.anna.szczech.royalgameofur.logic.ComputerRound;
 import com.anna.szczech.royalgameofur.player.Computer;
 import com.anna.szczech.royalgameofur.player.Player;
 import com.anna.szczech.royalgameofur.player.User;
@@ -13,10 +15,11 @@ import javafx.scene.text.Font;
 import javafx.scene.control.Label;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Board {
-    private Player computerPawns;
-    private Player userPawns;
+    private Player computer;
+    private Player user;
     private int move = 0;
     private boolean isUserTurn = true;
     private Points result = new Points();
@@ -28,13 +31,26 @@ public class Board {
     public FlowPane boxWithPlayerPawns;
     public FlowPane boxWithComputerPawns;
     public boolean wasRolled = false;
+    public Button stand;
 
     public Board(Pane pane){
-        computerPawns = new Computer(this);
-        userPawns = new User(this);
-        resultLabel = printResult();
         this.pane = pane;
+        createBoard();
+    }
+
+    private void createBoard(){
+        computer = new Computer(this);
+        user = new User(this);
+        resultLabel = printResult();
         createMessageLabel();
+        createStandButton();
+        createRollButton();
+    }
+
+    public void run(){
+        boxWithPlayerPawns = createBoxWithPawns(150, getUser().getPawns());
+        boxWithComputerPawns = createBoxWithPawns(1350, getComputer().getPawns());
+        pane.getChildren().add(getResultLabel());
     }
 
     public Label printResult(){
@@ -46,14 +62,6 @@ public class Board {
         return resultLabel;
     }
 
-    public void run(){
-        createRollButton();
-
-        boxWithPlayerPawns = createBoxWithPawns(150, getUserPawns().getPawns());
-        boxWithComputerPawns = createBoxWithPawns(1350, getComputerPawns().getPawns());
-        pane.getChildren().add(getResultLabel());
-    }
-
     public void rollNumberOnDice(){move = (int) (Math.random()*4 + 1);}
 
     public void createRollButton(){
@@ -63,12 +71,12 @@ public class Board {
         roll.setScaleX(2);
         roll.setScaleY(2);
         rolledNumber = writeRolledNumberOnLabel();
-        roll.setOnAction(event -> roll(rolledNumber));
+        roll.setOnAction(event -> roll());
         pane.getChildren().add(rolledNumber);
         pane.getChildren().add(roll);
     }
 
-    private void roll(Label rolledNumber){
+    public void roll(){
         if (!wasRolled) {
             rollNumberOnDice();
             rolledNumber.setText(String.valueOf(getMove()));
@@ -112,12 +120,12 @@ public class Board {
         return move;
     }
 
-    public Player getComputerPawns() {
-        return computerPawns;
+    public Player getComputer() {
+        return computer;
     }
 
-    public Player getUserPawns() {
-        return userPawns;
+    public Player getUser() {
+        return user;
     }
 
     public boolean isUserTurn() {
@@ -138,5 +146,23 @@ public class Board {
 
     public void setMove(int move) {
         this.move = move;
+    }
+
+    public void createStandButton(){
+        stand = new Button("STAND");
+        stand.setLayoutX(450);
+        stand.setLayoutY(653);
+        stand.setFont(new Font(20));
+        stand.setMinSize(0, 0);
+        stand.setMaxSize(150, 50);
+
+        stand.setOnAction(event -> {
+            if (!isEndGame) {
+                isUserTurn = !isUserTurn;
+                ComputerRound computerRound = new ComputerRound(this);
+                computerRound.newRound();
+            }
+        });
+        pane.getChildren().add(stand);
     }
 }

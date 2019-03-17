@@ -1,6 +1,6 @@
 package com.anna.szczech.royalgameofur.GUI;
 
-import com.anna.szczech.royalgameofur.logic.Round;
+import com.anna.szczech.royalgameofur.logic.PlayerRound;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
@@ -18,7 +18,8 @@ public class Pawns extends Label {
 
     private void movePawn(Board board){
         if (!board.isEndGame  && board.getMove() != 0) {
-            new Round(board, this);
+            PlayerRound playerRound = new PlayerRound(board, this);
+            playerRound.newRound();
         }
     }
 
