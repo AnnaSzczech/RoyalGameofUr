@@ -1,4 +1,4 @@
-package com.anna.szczech.royalgameofur.GUI;
+package com.anna.szczech.royalgameofur.gui;
 
 import com.anna.szczech.royalgameofur.logic.ComputerRound;
 import com.anna.szczech.royalgameofur.logic.PlayerRound;
@@ -40,9 +40,9 @@ public class Board {
     private void createBoard(){
         computer = new Computer(this);
         user = new User(this);
-        resultLabel = printResult();
+        resultLabel = createNewLabel(String.valueOf(result), 500, 120, 40);
         createMessageLabel();
-        createStandButton();
+        createNewRoundButton();
         createRollButton();
     }
 
@@ -52,24 +52,11 @@ public class Board {
         pane.getChildren().add(getResultLabel());
     }
 
-    public Label printResult(){
-        Label resultLabel = new Label(String.valueOf(result));
-        resultLabel.setLayoutX(500);
-        resultLabel.setLayoutY(120);
-        resultLabel.setFont(new Font(40));
-        resultLabel.setTextFill(Color.web("#FFF"));
-        return resultLabel;
-    }
-
     public void rollNumberOnDice(){move = (int) (Math.random()*4 + 1);}
 
     public void createRollButton(){
-        Button roll = new Button("ROLL DICE");
-        roll.setLayoutX(650);
-        roll.setLayoutY(660);
-        roll.setScaleX(2);
-        roll.setScaleY(2);
-        rolledNumber = writeRolledNumberOnLabel();
+        Button roll = createNewButton("ROLL DICE", 650, 660);
+        rolledNumber = createNewLabel("", 790, 650, 35);
         roll.setOnAction(event -> roll());
         pane.getChildren().add(rolledNumber);
         pane.getChildren().add(roll);
@@ -78,7 +65,7 @@ public class Board {
     public void roll(){
         if (!wasRolled && !isEndGame) {
             rollNumberOnDice();
-            rolledNumber.setText(String.valueOf(getMove()));
+            rolledNumber.setText(String.valueOf(move));
             wasRolled = true;
             if (isUserTurn) {
                 createFakeRound();
@@ -92,15 +79,6 @@ public class Board {
             newRound.setVisible(true);
             messageLabel.setText("There is no move to make, click NEW ROUND");
         }
-    }
-
-    public Label writeRolledNumberOnLabel(){
-        Label rolledNumber = new Label();
-        rolledNumber.setLayoutX(790);
-        rolledNumber.setLayoutY(650);
-        rolledNumber.setFont(new Font(35));
-        rolledNumber.setTextFill(Color.web("#FFF"));
-        return rolledNumber;
     }
 
     private FlowPane createBoxWithPawns(double x, List<Pawns> pawns){
@@ -118,12 +96,42 @@ public class Board {
     }
 
     private void createMessageLabel(){
-        messageLabel = new Label();
-        messageLabel.setLayoutX(600);
-        messageLabel.setLayoutY(720);
-        messageLabel.setFont(new Font(35));
-        messageLabel.setTextFill(Color.web("#FFF"));
+        messageLabel = createNewLabel("", 600, 720, 35);
         pane.getChildren().add(messageLabel);
+    }
+
+    public void createNewRoundButton(){
+        newRound = createNewButton("NEW ROUND", 450.0, 660.0);
+        newRound.setVisible(false);
+        newRound.setOnAction(event -> startNewRound());
+        pane.getChildren().add(newRound);
+    }
+
+    private void startNewRound(){
+        if (!isEndGame) {
+            isUserTurn = !isUserTurn;
+            newRound.setVisible(false);
+            ComputerRound computerRound = new ComputerRound(this);
+            computerRound.newRound();
+        }
+    }
+
+    private Button createNewButton(String name, double x, double y){
+        Button button = new Button(name);
+        button.setLayoutX(x);
+        button.setLayoutY(y);
+        button.setScaleX(2);
+        button.setScaleY(2);
+        return button;
+    }
+
+    private Label createNewLabel(String name, double x, double y, int fintSize){
+        Label label = new Label(name);
+        label.setLayoutX(x);
+        label.setLayoutY(y);
+        label.setFont(new Font(fintSize));
+        label.setTextFill(Color.web("#FFF"));
+        return label;
     }
 
     public int getMove() {
@@ -156,24 +164,5 @@ public class Board {
 
     public void setMove(int move) {
         this.move = move;
-    }
-
-    public void createStandButton(){
-        newRound = new Button("NEW ROUND");
-        newRound.setLayoutX(450);
-        newRound.setLayoutY(660);
-        newRound.setScaleX(2);
-        newRound.setScaleY(2);
-        newRound.setVisible(false);
-
-        newRound.setOnAction(event -> {
-            if (!isEndGame) {
-                isUserTurn = !isUserTurn;
-                newRound.setVisible(false);
-                ComputerRound computerRound = new ComputerRound(this);
-                computerRound.newRound();
-            }
-        });
-        pane.getChildren().add(newRound);
     }
 }

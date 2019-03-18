@@ -1,7 +1,7 @@
 package com.anna.szczech.royalgameofur.logic;
 
-import com.anna.szczech.royalgameofur.GUI.Board;
-import com.anna.szczech.royalgameofur.GUI.Pawns;
+import com.anna.szczech.royalgameofur.gui.Board;
+import com.anna.szczech.royalgameofur.gui.Pawns;
 import com.anna.szczech.royalgameofur.player.Computer;
 import com.anna.szczech.royalgameofur.player.Player;
 import com.anna.szczech.royalgameofur.player.User;
@@ -10,7 +10,7 @@ import javafx.scene.layout.FlowPane;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Round {
+abstract class Round {
     public Board board;
     public Pawns pawn;
     private Pawns capturePawn = null;
@@ -24,8 +24,7 @@ public class Round {
             int oldLocation = pawn.getLocation();
             int newLocation = oldLocation + board.getMove();
             if (canSelectedPawnChangeLocation(newLocation, pawn)) {
-                pawn.setLocation(newLocation);
-                movePawn(oldLocation);
+                movePawn(oldLocation, newLocation);
                 checkIfIsEndOfTheGame();
                 if (!isBonusRoll(oldLocation, newLocation)) {
                     changeTurn();
@@ -121,7 +120,8 @@ public class Round {
         }
     }
 
-    private void movePawn(int oldLocation) {
+    private void movePawn(int oldLocation, int newLocation) {
+        pawn.setLocation(newLocation);
         if (willPawnGetPoint()) {
             moveToWin();
         } else {
@@ -273,7 +273,5 @@ public class Round {
         }
     }
 
-    public void specificMove(int oldLocationOfPawn){
-        //method to override
-    }
+    abstract void specificMove(int oldLocationOfPawn);
 }

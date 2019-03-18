@@ -1,4 +1,4 @@
-package com.anna.szczech.royalgameofur.GUI;
+package com.anna.szczech.royalgameofur.gui;
 
 public class LocalizationOnBoard {
     private double x;

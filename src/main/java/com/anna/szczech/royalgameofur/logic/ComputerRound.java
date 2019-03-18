@@ -1,7 +1,7 @@
 package com.anna.szczech.royalgameofur.logic;
 
-import com.anna.szczech.royalgameofur.GUI.Board;
-import com.anna.szczech.royalgameofur.GUI.Pawns;
+import com.anna.szczech.royalgameofur.gui.Board;
+import com.anna.szczech.royalgameofur.gui.Pawns;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,12 +43,6 @@ public class ComputerRound extends Round {
 
     private void repeatMove() {
         pawn = selectThePawn();
-//        if (isThereAnyPossibleMove()) {
-            this.newRound();
-//        } else {
-//            System.out.println("no move 2");
-//            changeTurn();
-//            resetRoll();
-//        }
+        this.newRound();
     }
 }

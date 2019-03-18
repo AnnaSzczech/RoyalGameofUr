@@ -1,6 +1,6 @@
 package com.anna.szczech.royalgameofur;
 
-import com.anna.szczech.royalgameofur.GUI.Board;
+import com.anna.szczech.royalgameofur.gui.Board;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;

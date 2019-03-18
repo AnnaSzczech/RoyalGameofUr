@@ -1,4 +1,4 @@
-package com.anna.szczech.royalgameofur.GUI;
+package com.anna.szczech.royalgameofur.gui;
 
 import com.anna.szczech.royalgameofur.logic.PlayerRound;
 import javafx.scene.Node;
@@ -11,9 +11,7 @@ public class Pawns extends Label {
     public Pawns(Node graphic, Board board, Object playerClass) {
         super("", graphic);
         this.playerClass = playerClass;
-        this.setOnMouseClicked(event -> {
-            movePawn(board);
-        });
+        this.setOnMouseClicked(event -> movePawn(board));
     }
 
     private void movePawn(Board board){

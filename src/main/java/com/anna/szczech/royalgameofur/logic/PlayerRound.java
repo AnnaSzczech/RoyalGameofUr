@@ -1,7 +1,7 @@
 package com.anna.szczech.royalgameofur.logic;
 
-import com.anna.szczech.royalgameofur.GUI.Board;
-import com.anna.szczech.royalgameofur.GUI.Pawns;
+import com.anna.szczech.royalgameofur.gui.Board;
+import com.anna.szczech.royalgameofur.gui.Pawns;
 
 public class PlayerRound extends Round {
 
