@@ -11,15 +11,16 @@ public class PlayerRound extends Round {
     }
 
     @Override
-    public void specificMove(int oldLocation, int newLocation){
-        if (!board.isUserTurn()) {
+    public void specificMove(int oldLocation){
+        if (!board.isUserTurn() && !board.isEndGame) {
             ComputerRound computerRound = new ComputerRound(board);
-            computerRound.newRound();
+            if (computerRound.isThereAnyPossibleMove()) {
+                computerRound.newRound();
+            } else {
+                System.out.println("no move , 1");
+                changeTurn();
+                resetRoll();
+            }
         }
-    }
-
-    @Override
-    public void noMove(){
-        sendMessage("No move to make, click Stand");
     }
 }

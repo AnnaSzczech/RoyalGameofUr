@@ -14,22 +14,21 @@ public class Round {
     public Board board;
     public Pawns pawn;
     private Pawns capturePawn = null;
+    public boolean bonusRoll = false;
 
     public Round(Board board) {
         this.board = board;
     }
 
     public void newRound() {
-        if (isThereAnyPossibleMove()) {
             int oldLocation = pawn.getLocation();
             int newLocation = oldLocation + board.getMove();
             if (canSelectedPawnChangeLocation(newLocation, pawn)) {
-                pawn.setLocation(pawn.getLocation() + board.getMove());
+                pawn.setLocation(newLocation);
                 movePawn(oldLocation);
                 checkIfIsEndOfTheGame();
-                if (!isBonusRoll()) {
+                if (!isBonusRoll(oldLocation, newLocation)) {
                     changeTurn();
-                    writeWhoseTurn();
                 } else {
                     sendMessage("BONUS ROLL!");
                 }
@@ -37,19 +36,7 @@ public class Round {
             } else {
                 sendMessage("WRONG MOVE, REPEAT");
             }
-            specificMove(oldLocation, newLocation);
-        } else {
-            noMove();
-            resetRoll();
-        }
-    }
-
-    public void specificMove(int oldLocationOfPawn, int newLocationOfPawn){
-
-    }
-
-    public void noMove(){
-
+            specificMove(oldLocation);
     }
 
     private boolean canSelectedPawnChangeLocation(int newLocation, Pawns pawn) {
@@ -65,7 +52,7 @@ public class Round {
         if (location == 15) {
             return true;
         }
-        return !(isPawnOnSpecyficLocation(pawns, location));
+        return !(isPawnOnSpecificLocation(pawns, location));
     }
 
     private Object whoseTurn() {
@@ -82,15 +69,15 @@ public class Round {
         boolean isEnemyOnSafeSpot = false;
         if (newLocation == 8) {
             if (pawn.getPlayerClass() == User.class) {
-                isEnemyOnSafeSpot = isPawnOnSpecyficLocation(getComputerPawns(), newLocation);
+                isEnemyOnSafeSpot = isPawnOnSpecificLocation(getComputerPawns(), newLocation);
             } else {
-                isEnemyOnSafeSpot = isPawnOnSpecyficLocation(getUserPawns(), newLocation);
+                isEnemyOnSafeSpot = isPawnOnSpecificLocation(getUserPawns(), newLocation);
             }
         }
         return isEnemyOnSafeSpot;
     }
 
-    private boolean isPawnOnSpecyficLocation(List<Pawns> pawns, int newLocation){
+    private boolean isPawnOnSpecificLocation(List<Pawns> pawns, int newLocation){
         return pawns.stream().filter(enemyPawn -> enemyPawn.getLocation() == newLocation).findFirst().isPresent();
     }
 
@@ -195,11 +182,16 @@ public class Round {
     }
 
     private boolean isPawnToCapture(List<Pawns> pawns) {
-        return (isPawnOnSpecyficLocation(pawns, pawn.getLocation()));
+        return (isPawnOnSpecificLocation(pawns, pawn.getLocation()));
     }
 
-    public boolean isBonusRoll() {
-        return (pawn.getLocation() == 4 || pawn.getLocation() == 8 || pawn.getLocation() == 14);
+    public boolean isBonusRoll(int oldLocation, int newLocation) {
+        if ((pawn.getLocation() == 4 || pawn.getLocation() == 8 || pawn.getLocation() == 14) && oldLocation != newLocation){
+            bonusRoll = true;
+        } else {
+            bonusRoll = false;
+        }
+        return bonusRoll;
     }
 
     public void changeTurn() {
@@ -226,34 +218,19 @@ public class Round {
     private void checkIfIsEndOfTheGame() {
         if (board.getResult().getComputerPoints() == 7 || board.getResult().getUserPoints() == 7) {
             board.isEndGame = true;
-            sendMessage("The winner is " + whoWon());
+            sendMessage("THE WINNER IS " + whoWon());
         }
     }
 
     private String whoWon() {
         String player;
         if (board.getResult().getComputerPoints() == 7) {
-            player = "Computer";
+            player = "COMPUTER";
         } else {
-            player = "User";
+            player = "USER";
         }
         return player;
     }
-
-//    private void computerRound() {
-//        changeTurn();
-//        computerMove(board.boxWithComputerPawns);
-//        if (!board.isEndGame) {
-//            writeWhoseTurn();
-//        }
-//    }
-
-//    private void computerMove(FlowPane boxWithComputerPawns) {
-//        if (!board.isUserTurn()) {
-//            ComputerLogic computerLogic = new ComputerLogic(board);
-//            computerLogic.run(boxWithComputerPawns, board.getComputer().getPawns());
-//        }
-//    }
 
     private void writeWhoseTurn() {
         if (board.isUserTurn()) {
@@ -268,6 +245,7 @@ public class Round {
     }
 
     public boolean isThereAnyPossibleMove() {
+        // spr czy został wybrany pionek gracza którego jest kolej
         if (pawn.getPlayerClass() != whoseTurn()) {
             return true;
         }
@@ -275,11 +253,6 @@ public class Round {
         pawns = pawns.stream().filter(pawn -> pawn.getLocation() < 15).collect(Collectors.toList());
         return pawns.stream().filter(pawn -> canSelectedPawnChangeLocation(pawn.getLocation() + board.getMove(), pawn)).findFirst().isPresent();
     }
-
-//    public void createButtonIfThereIsNotAnyMoveToMake() {
-//        board.stand.setMaxSize(150, 50);
-//        sendMessage("There is no move to make, click STAND");
-//    }
 
     private List<Pawns> getUserPawns(){
         return board.getUser().getPawns();
@@ -290,8 +263,17 @@ public class Round {
     }
 
     public void resetRoll(){
-        board.wasRolled = false;
-        board.setMove(0);
-        board.rolledNumber.setText(String.valueOf(board.getMove()));
+        if (!board.isEndGame) {
+            board.wasRolled = false;
+            board.setMove(0);
+            board.rolledNumber.setText(String.valueOf(board.getMove()));
+            if (!bonusRoll) {
+                writeWhoseTurn();
+            }
+        }
+    }
+
+    public void specificMove(int oldLocationOfPawn){
+        //method to override
     }
 }

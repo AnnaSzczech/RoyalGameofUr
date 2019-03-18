@@ -3,6 +3,9 @@ package com.anna.szczech.royalgameofur.logic;
 import com.anna.szczech.royalgameofur.GUI.Board;
 import com.anna.szczech.royalgameofur.GUI.Pawns;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ComputerRound extends Round {
     public ComputerRound(Board board) {
         super(board);
@@ -12,13 +15,24 @@ public class ComputerRound extends Round {
     }
 
     private Pawns selectThePawn() {
-        int rollNumber = (int) (Math.random() * 7);
-        return getComputerPawns().get(rollNumber);
+        List<Pawns> pawns = getComputerPawns().stream().filter(pawn -> pawn.getLocation() < 15).collect(Collectors.toList());
+        int rollNumber = (int) (Math.random() * pawns.size());
+        return pawns.get(rollNumber);
     }
 
     @Override
-    public void specificMove(int oldLocationOfPawn, int newLocationOfPawn) {
-        if (repeatIfPawnDidntMakeMove(oldLocationOfPawn, pawn.getLocation()) || isBonusRoll()) {
+    public void specificMove(int oldLocationOfPawn) {
+        if (isBonusRoll(oldLocationOfPawn, pawn.getLocation())) {
+            resetRoll();
+            board.roll();
+            if (isThereAnyPossibleMove()) {
+                repeatMove();
+            }else {
+                System.out.println("no move 2");
+                changeTurn();
+                resetRoll();
+            }
+        } else if (repeatIfPawnDidntMakeMove(oldLocationOfPawn, pawn.getLocation())) {
             repeatMove();
         }
     }
@@ -28,17 +42,13 @@ public class ComputerRound extends Round {
     }
 
     private void repeatMove() {
-        if (isBonusRoll()) {
-            resetRoll();
-            board.roll();
-        }
         pawn = selectThePawn();
-        this.newRound();
-    }
-
-    @Override
-    public void noMove(){
-        System.out.println("no move");
-        changeTurn();
+//        if (isThereAnyPossibleMove()) {
+            this.newRound();
+//        } else {
+//            System.out.println("no move 2");
+//            changeTurn();
+//            resetRoll();
+//        }
     }
 }

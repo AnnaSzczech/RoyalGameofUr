@@ -1,7 +1,7 @@
 package com.anna.szczech.royalgameofur.GUI;
 
-//import com.anna.szczech.royalgameofur.logic.ComputerLogic;
 import com.anna.szczech.royalgameofur.logic.ComputerRound;
+import com.anna.szczech.royalgameofur.logic.PlayerRound;
 import com.anna.szczech.royalgameofur.player.Computer;
 import com.anna.szczech.royalgameofur.player.Player;
 import com.anna.szczech.royalgameofur.player.User;
@@ -15,7 +15,6 @@ import javafx.scene.text.Font;
 import javafx.scene.control.Label;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Board {
     private Player computer;
@@ -31,7 +30,7 @@ public class Board {
     public FlowPane boxWithPlayerPawns;
     public FlowPane boxWithComputerPawns;
     public boolean wasRolled = false;
-    public Button stand;
+    public Button newRound;
 
     public Board(Pane pane){
         this.pane = pane;
@@ -77,10 +76,21 @@ public class Board {
     }
 
     public void roll(){
-        if (!wasRolled) {
+        if (!wasRolled && !isEndGame) {
             rollNumberOnDice();
             rolledNumber.setText(String.valueOf(getMove()));
             wasRolled = true;
+            if (isUserTurn) {
+                createFakeRound();
+            }
+        }
+    }
+
+    private void createFakeRound(){
+        PlayerRound playerRound = new PlayerRound(this, getUser().getPawns().get(0));
+        if (!playerRound.isThereAnyPossibleMove()) {
+            newRound.setVisible(true);
+            messageLabel.setText("There is no move to make, click NEW ROUND");
         }
     }
 
@@ -149,20 +159,21 @@ public class Board {
     }
 
     public void createStandButton(){
-        stand = new Button("STAND");
-        stand.setLayoutX(450);
-        stand.setLayoutY(653);
-        stand.setFont(new Font(20));
-        stand.setMinSize(0, 0);
-        stand.setMaxSize(150, 50);
+        newRound = new Button("NEW ROUND");
+        newRound.setLayoutX(450);
+        newRound.setLayoutY(660);
+        newRound.setScaleX(2);
+        newRound.setScaleY(2);
+        newRound.setVisible(false);
 
-        stand.setOnAction(event -> {
+        newRound.setOnAction(event -> {
             if (!isEndGame) {
                 isUserTurn = !isUserTurn;
+                newRound.setVisible(false);
                 ComputerRound computerRound = new ComputerRound(this);
                 computerRound.newRound();
             }
         });
-        pane.getChildren().add(stand);
+        pane.getChildren().add(newRound);
     }
 }
