@@ -1,22 +1,26 @@
 package com.anna.szczech.royalgameofur.gui;
 
 import com.anna.szczech.royalgameofur.logic.PlayerRound;
-import javafx.scene.Node;
+import com.anna.szczech.royalgameofur.player.PlayerEnum;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Pawns extends Label {
     private int location = 0;
-    private Object playerClass;
+    private Roll roll;
+    private PlayerEnum playerEnum;
 
-    public Pawns(Node graphic, Board board, Object playerClass) {
-        super("", graphic);
-        this.playerClass = playerClass;
+    public Pawns(Image image, Board board, PlayerEnum playerEnum, Roll roll) {
+        super("", new ImageView(image));
+        this.roll = roll;
+        this.playerEnum = playerEnum;
         this.setOnMouseClicked(event -> movePawn(board));
     }
 
     private void movePawn(Board board){
-        if (!board.isEndGame  && board.getMove() != 0) {
-            PlayerRound playerRound = new PlayerRound(board, this);
+        if (!board.isGameEnded  && roll.getRolledNumber() != 0) {
+            PlayerRound playerRound = new PlayerRound(board, this, roll);
             playerRound.newRound();
         }
     }
@@ -29,7 +33,8 @@ public class Pawns extends Label {
         this.location = location;
     }
 
-    public Object getPlayerClass() {
-        return playerClass;
+
+    public PlayerEnum getPlayerEnum() {
+        return playerEnum;
     }
 }

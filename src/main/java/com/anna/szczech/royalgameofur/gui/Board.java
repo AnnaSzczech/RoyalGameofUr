@@ -2,10 +2,7 @@ package com.anna.szczech.royalgameofur.gui;
 
 import com.anna.szczech.royalgameofur.logic.ComputerRound;
 import com.anna.szczech.royalgameofur.logic.PlayerRound;
-import com.anna.szczech.royalgameofur.player.Computer;
 import com.anna.szczech.royalgameofur.player.Player;
-import com.anna.szczech.royalgameofur.player.User;
-import com.anna.szczech.royalgameofur.result.Points;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
@@ -19,66 +16,64 @@ import java.util.List;
 public class Board {
     private Player computer;
     private Player user;
-    private int move = 0;
     private boolean isUserTurn = true;
-    private Points result = new Points();
     private Label resultLabel;
-    public boolean isEndGame = false;
+    public Button newRoundButton;
+    public boolean isGameEnded = false;
     public Pane pane;
-    public Label rolledNumber;
+    public Label rolledNumberLabel;
     public Label messageLabel;
     public FlowPane boxWithPlayerPawns;
     public FlowPane boxWithComputerPawns;
-    public boolean wasRolled = false;
-    public Button newRound;
+    private Roll roll;
 
     public Board(Pane pane){
         this.pane = pane;
-        createBoard();
     }
 
-    private void createBoard(){
-        computer = new Computer(this);
-        user = new User(this);
-        resultLabel = createNewLabel(String.valueOf(result), 500, 120, 40);
+    public void createBoard(Player computer, Player user, Roll roll){
+        this.computer = computer;
+        this.user = user;
+        this.roll = roll;
+        resultLabel = createNewLabel(String.valueOf(resultForAllPlayers()), 500, 120, 40);
         createMessageLabel();
         createNewRoundButton();
         createRollButton();
-    }
-
-    public void run(){
-        boxWithPlayerPawns = createBoxWithPawns(150, getUser().getPawns());
-        boxWithComputerPawns = createBoxWithPawns(1350, getComputer().getPawns());
+        createBoxesWithPlayersPawns();
         pane.getChildren().add(getResultLabel());
     }
 
-    public void rollNumberOnDice(){move = (int) (Math.random()*4 + 1);}
-
-    public void createRollButton(){
-        Button roll = createNewButton("ROLL DICE", 650, 660);
-        rolledNumber = createNewLabel("", 790, 650, 35);
-        roll.setOnAction(event -> roll());
-        pane.getChildren().add(rolledNumber);
-        pane.getChildren().add(roll);
+    public String resultForAllPlayers(){
+        return "USER POINTS : COMPUTER POINTS\n                   "
+                + user.getPoints() + "  :  " + computer.getPoints();
     }
 
-    public void roll(){
-        if (!wasRolled && !isEndGame) {
-            rollNumberOnDice();
-            rolledNumber.setText(String.valueOf(move));
-            wasRolled = true;
-            if (isUserTurn) {
+    private void createRollButton(){
+        Button rollButton = createNewButton("ROLL DICE", 650, 660);
+        rolledNumberLabel = createNewLabel("", 790, 650, 35);
+        rollButton.setOnAction(event -> {
+            int oldRolledNumber = roll.getRolledNumber();
+            roll.diceRoll(isGameEnded, isUserTurn);
+            rolledNumberLabel.setText(String.valueOf(roll.getRolledNumber()));
+            if (oldRolledNumber != roll.getRolledNumber()) {
                 createFakeRound();
             }
-        }
+        });
+        pane.getChildren().add(rolledNumberLabel);
+        pane.getChildren().add(rollButton);
     }
 
     private void createFakeRound(){
-        PlayerRound playerRound = new PlayerRound(this, getUser().getPawns().get(0));
+        PlayerRound playerRound = new PlayerRound(this, getUser().getPawns().get(0), roll);
         if (!playerRound.isThereAnyPossibleMove()) {
-            newRound.setVisible(true);
+            newRoundButton.setVisible(true);
             messageLabel.setText("There is no move to make, click NEW ROUND");
         }
+    }
+
+    private void createBoxesWithPlayersPawns(){
+        boxWithPlayerPawns = createBoxWithPawns(150, getUser().getPawns());
+        boxWithComputerPawns = createBoxWithPawns(1350, getComputer().getPawns());
     }
 
     private FlowPane createBoxWithPawns(double x, List<Pawns> pawns){
@@ -100,18 +95,18 @@ public class Board {
         pane.getChildren().add(messageLabel);
     }
 
-    public void createNewRoundButton(){
-        newRound = createNewButton("NEW ROUND", 450.0, 660.0);
-        newRound.setVisible(false);
-        newRound.setOnAction(event -> startNewRound());
-        pane.getChildren().add(newRound);
+    private void createNewRoundButton(){
+        newRoundButton = createNewButton("NEW ROUND", 450.0, 660.0);
+        newRoundButton.setVisible(false);
+        newRoundButton.setOnAction(event -> startNewRound());
+        pane.getChildren().add(newRoundButton);
     }
 
     private void startNewRound(){
-        if (!isEndGame) {
+        if (!isGameEnded) {
             isUserTurn = !isUserTurn;
-            newRound.setVisible(false);
-            ComputerRound computerRound = new ComputerRound(this);
+            newRoundButton.setVisible(false);
+            ComputerRound computerRound = new ComputerRound(this, roll);
             computerRound.newRound();
         }
     }
@@ -125,17 +120,13 @@ public class Board {
         return button;
     }
 
-    private Label createNewLabel(String name, double x, double y, int fintSize){
+    private Label createNewLabel(String name, double x, double y, int fontSize){
         Label label = new Label(name);
         label.setLayoutX(x);
         label.setLayoutY(y);
-        label.setFont(new Font(fintSize));
+        label.setFont(new Font(fontSize));
         label.setTextFill(Color.web("#FFF"));
         return label;
-    }
-
-    public int getMove() {
-        return move;
     }
 
     public Player getComputer() {
@@ -156,13 +147,5 @@ public class Board {
 
     public Label getResultLabel() {
         return resultLabel;
-    }
-
-    public Points getResult() {
-        return result;
-    }
-
-    public void setMove(int move) {
-        this.move = move;
     }
 }

@@ -2,16 +2,17 @@ package com.anna.szczech.royalgameofur.logic;
 
 import com.anna.szczech.royalgameofur.gui.Board;
 import com.anna.szczech.royalgameofur.gui.Pawns;
+import com.anna.szczech.royalgameofur.gui.Roll;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ComputerRound extends Round {
-    public ComputerRound(Board board) {
-        super(board);
+    public ComputerRound(Board board, Roll roll) {
+        super(board, roll);
         this.pawn = selectThePawn();
         resetRoll();
-        board.roll();
+        roll.diceRoll(board.isGameEnded, board.isUserTurn());
     }
 
     private Pawns selectThePawn() {
@@ -24,11 +25,10 @@ public class ComputerRound extends Round {
     public void specificMove(int oldLocationOfPawn) {
         if (isBonusRoll(oldLocationOfPawn, pawn.getLocation())) {
             resetRoll();
-            board.roll();
+            roll.diceRoll(board.isGameEnded, board.isUserTurn());
             if (isThereAnyPossibleMove()) {
                 repeatMove();
             }else {
-                System.out.println("no move 2");
                 changeTurn();
                 resetRoll();
             }

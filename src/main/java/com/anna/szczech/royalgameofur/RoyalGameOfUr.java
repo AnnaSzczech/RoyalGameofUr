@@ -1,6 +1,7 @@
 package com.anna.szczech.royalgameofur;
 
 import com.anna.szczech.royalgameofur.gui.Board;
+import com.anna.szczech.royalgameofur.gui.GamePlay;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -19,9 +20,7 @@ public class RoyalGameOfUr extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         Pane pane = new Pane();
-        Board board = new Board(pane);
-
-        board.run();
+        GamePlay gamePlay = new GamePlay(pane);
 
         pane.setBackground(createBackground());
         Scene scene = new Scene(pane, 1600, 900, Color.BLACK);
