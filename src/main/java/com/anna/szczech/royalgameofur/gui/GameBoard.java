@@ -1,5 +1,6 @@
 package com.anna.szczech.royalgameofur.gui;
 
+import com.anna.szczech.royalgameofur.logic.Game;
 import com.anna.szczech.royalgameofur.player.Player;
 import com.anna.szczech.royalgameofur.player.PlayerEnum;
 import javafx.scene.image.Image;
@@ -8,19 +9,17 @@ import javafx.scene.layout.Pane;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GamePlay {
-    private Board gameBoard;
-    private Roll roll = new Roll();
-    private Player computer;
-    private Player user;
-    private Image whitePawnImage = new Image("file:src/main/resources/white.png");
-    private Image blackPawnImage = new Image("file:src/main/resources/black.png");
+public class GameBoard {
 
-    public GamePlay(Pane pane){
-        gameBoard = new Board(pane);
-        computer = new Player(gameBoard, roll, blackPawnImage, PlayerEnum.COMPUTER, setFieldFreeFromBattleForComputerPawns());
-        user = new Player(gameBoard, roll, whitePawnImage, PlayerEnum.USER, setFieldFreeFromBattleForUserPawns());
-        gameBoard.createBoard(computer, user, roll);
+    public GameBoard(Pane pane){
+        Image whitePawnImage = new Image("file:src/main/resources/white.png");
+        Image blackPawnImage = new Image("file:src/main/resources/black.png");
+        Board gameBoard = new Board(pane);
+        Game game = new Game();
+        Player computer = new Player(blackPawnImage, PlayerEnum.COMPUTER, setFieldFreeFromBattleForComputerPawns(), game);
+        Player user = new Player(whitePawnImage, PlayerEnum.USER, setFieldFreeFromBattleForUserPawns(), game);
+        game.addUserAndComputer(user, computer);
+        gameBoard.createBoard(game);
     }
 
     private Map<LocalizationOnBoard, Integer> setFieldFreeFromBattleForComputerPawns() {

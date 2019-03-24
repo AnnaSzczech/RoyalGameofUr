@@ -1,9 +1,8 @@
 package com.anna.szczech.royalgameofur.player;
 
-import com.anna.szczech.royalgameofur.gui.Board;
 import com.anna.szczech.royalgameofur.gui.LocalizationOnBoard;
 import com.anna.szczech.royalgameofur.gui.Pawns;
-import com.anna.szczech.royalgameofur.gui.Roll;
+import com.anna.szczech.royalgameofur.logic.Game;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -12,20 +11,22 @@ import java.util.List;
 import java.util.Map;
 
 public class Player {
-    private List<Pawns> pawns = new ArrayList<>();
+    private List<Pawns> pawns;
     private Map<LocalizationOnBoard, Integer> localizationOnBoard = new HashMap<>();
     private int points = 0;
+    private boolean isPlayerTurn = false;
 
 
-    public Player(Board board, Roll roll, Image image, PlayerEnum playerEnum, Map<LocalizationOnBoard, Integer> fieldFreeFromBattle) {
-        pawns = createPawns(image, 7, board, playerEnum, roll);
+    public Player(Image image, PlayerEnum playerEnum, Map<LocalizationOnBoard, Integer> fieldFreeFromBattle, Game game) {
+        pawns = createPawns(image, playerEnum, game);
         setLocalizationOnBoard(fieldFreeFromBattle);
     }
 
-    private List<Pawns> createPawns(Image image, int numberOfPawns, Board board, PlayerEnum playerEnum, Roll roll){
+    private List<Pawns> createPawns(Image image, PlayerEnum playerEnum, Game game){
+        int numberOfPawns = 7;
         List<Pawns> pawns = new ArrayList<>();
         for (int i = 0; i < numberOfPawns; i++){
-            Pawns pawn = new Pawns(image, board, playerEnum, roll);
+            Pawns pawn = new Pawns(image, playerEnum, game);
             pawns.add(pawn);
         }
         return pawns;
@@ -57,5 +58,13 @@ public class Player {
 
     public void addPoint() {
         this.points++;
+    }
+
+    public boolean isPlayerTurn() {
+        return isPlayerTurn;
+    }
+
+    public void changeTurn() {
+        isPlayerTurn = !isPlayerTurn;
     }
 }

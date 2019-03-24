@@ -1,18 +1,17 @@
-package com.anna.szczech.royalgameofur.logic;
+package com.anna.szczech.royalgameofur.logic.round;
 
-import com.anna.szczech.royalgameofur.gui.Board;
 import com.anna.szczech.royalgameofur.gui.Pawns;
-import com.anna.szczech.royalgameofur.gui.Roll;
+import com.anna.szczech.royalgameofur.logic.Game;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ComputerRound extends Round {
-    public ComputerRound(Board board, Roll roll) {
-        super(board, roll);
-        this.pawn = selectThePawn();
-        resetRoll();
-        roll.diceRoll(board.isGameEnded, board.isUserTurn());
+    public ComputerRound(Game game) {
+        super(game);
+        setPawn(selectThePawn());
+        game.resetRoll();
+        game.getRoll().diceRoll(game.isGameEnded());
     }
 
     private Pawns selectThePawn() {
@@ -23,16 +22,16 @@ public class ComputerRound extends Round {
 
     @Override
     public void specificMove(int oldLocationOfPawn) {
-        if (isBonusRoll(oldLocationOfPawn, pawn.getLocation())) {
-            resetRoll();
-            roll.diceRoll(board.isGameEnded, board.isUserTurn());
+        if (isBonusRoll(oldLocationOfPawn, getPawn().getLocation())) {
+            getGame().resetRoll();
+            getGame().getRoll().diceRoll(getGame().isGameEnded());
             if (isThereAnyPossibleMove()) {
                 repeatMove();
             }else {
-                changeTurn();
-                resetRoll();
+                getGame().changeTurn();
+                getGame().resetRoll();
             }
-        } else if (repeatIfPawnDidntMakeMove(oldLocationOfPawn, pawn.getLocation())) {
+        } else if (repeatIfPawnDidntMakeMove(oldLocationOfPawn, getPawn().getLocation())) {
             repeatMove();
         }
     }
@@ -42,7 +41,7 @@ public class ComputerRound extends Round {
     }
 
     private void repeatMove() {
-        pawn = selectThePawn();
+        setPawn(selectThePawn());
         this.newRound();
     }
 }

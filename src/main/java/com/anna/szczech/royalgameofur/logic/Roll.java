@@ -1,4 +1,4 @@
-package com.anna.szczech.royalgameofur.gui;
+package com.anna.szczech.royalgameofur.logic;
 
 public class Roll {
     private int rolledNumber = 0;
@@ -6,7 +6,7 @@ public class Roll {
 
     private void rollNumberOnDice(){rolledNumber = (int) (Math.random()*4 + 1);}
 
-    public void diceRoll(boolean isGameEnded, boolean isUserTurn){
+    public void diceRoll(boolean isGameEnded){
         if (!wasRolled && !isGameEnded) {
             rollNumberOnDice();
             wasRolled = true;
