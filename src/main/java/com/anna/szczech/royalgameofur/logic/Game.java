@@ -17,7 +17,7 @@ public class Game {
 
     public void movePawn(Pawns pawn) {
         if (!isGameEnded && roll.getRolledNumber() != 0) {
-            PlayerRound playerRound = new PlayerRound(pawn, this);
+            PlayerRound playerRound = new PlayerRound(pawn);
             playerRound.newRound();
         }
     }
@@ -38,7 +38,7 @@ public class Game {
     }
 
     private void createFakeRound() {
-        PlayerRound playerRound = new PlayerRound(user.getPawns().get(0), this);
+        PlayerRound playerRound = new PlayerRound(user.getPawns().get(0));
         if (!playerRound.isThereAnyPossibleMove()) {
             board.newRoundButton.setVisible(true);
            sendMessage("There is no move to make, click NEW ROUND");
@@ -49,6 +49,7 @@ public class Game {
         if (computerRound.isThereAnyPossibleMove()) {
             computerRound.newRound();
         } else {
+            System.out.println("no move 1");
             changeTurn();
             resetRoll();
         }
@@ -65,7 +66,7 @@ public class Game {
             user.changeTurn();
             computer.changeTurn();
             board.newRoundButton.setVisible(false);
-            ComputerRound computerRound = new ComputerRound( this);
+            ComputerRound computerRound = new ComputerRound(getComputer().getPawns().get(0));
             computerRound.newRound();
         }
     }

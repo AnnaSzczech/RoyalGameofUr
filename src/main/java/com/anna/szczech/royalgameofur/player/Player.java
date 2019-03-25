@@ -2,10 +2,6 @@ package com.anna.szczech.royalgameofur.player;
 
 import com.anna.szczech.royalgameofur.gui.LocalizationOnBoard;
 import com.anna.szczech.royalgameofur.gui.Pawns;
-import com.anna.szczech.royalgameofur.logic.Game;
-import javafx.scene.image.Image;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,19 +13,9 @@ public class Player {
     private boolean isPlayerTurn = false;
 
 
-    public Player(Image image, PlayerEnum playerEnum, Map<LocalizationOnBoard, Integer> fieldFreeFromBattle, Game game) {
-        pawns = createPawns(image, playerEnum, game);
+    public Player(Map<LocalizationOnBoard, Integer> fieldFreeFromBattle, List<Pawns> pawns) {
+        this.pawns = pawns;
         setLocalizationOnBoard(fieldFreeFromBattle);
-    }
-
-    private List<Pawns> createPawns(Image image, PlayerEnum playerEnum, Game game){
-        int numberOfPawns = 7;
-        List<Pawns> pawns = new ArrayList<>();
-        for (int i = 0; i < numberOfPawns; i++){
-            Pawns pawn = new Pawns(image, playerEnum, game);
-            pawns.add(pawn);
-        }
-        return pawns;
     }
 
     private void setLocalizationOnBoard(Map<LocalizationOnBoard, Integer> fieldFreeFromBattle){

@@ -12,26 +12,22 @@ abstract class Round {
     private Pawns capturePawn = null;
     private Game game;
 
-    public Round(Game game) {
-        this.game = game;
-    }
-
     public void newRound() {
-            int oldLocation = pawn.getLocation();
-            int newLocation = oldLocation + game.getRoll().getRolledNumber();
-            if (canSelectedPawnChangeLocation(newLocation, pawn)) {
-                movePawn(oldLocation, newLocation);
-                checkIfIsEndOfTheGame();
-                if (!isBonusRoll(oldLocation, newLocation)) {
-                    game.changeTurn();
-                } else {
-                    game.sendMessage("BONUS ROLL!");
-                }
-                game.resetRoll();
+        int oldLocation = pawn.getLocation();
+        int newLocation = oldLocation + game.getRoll().getRolledNumber();
+        if (canSelectedPawnChangeLocation(newLocation, pawn)) {
+            movePawn(oldLocation, newLocation);
+            checkIfIsEndOfTheGame();
+            if (!isBonusRoll(oldLocation, newLocation)) {
+                game.changeTurn();
             } else {
-                game.sendMessage("WRONG MOVE, REPEAT");
+                game.sendMessage("BONUS ROLL!");
             }
-            specificMove(oldLocation);
+            game.resetRoll();
+        } else {
+            game.sendMessage("WRONG MOVE, REPEAT");
+        }
+        specificMove(oldLocation);
     }
 
     private boolean canSelectedPawnChangeLocation(int newLocation, Pawns pawn) {
@@ -62,11 +58,11 @@ abstract class Round {
         return isEnemyOnSafeSpot;
     }
 
-    private boolean isUserPawn(Pawns pawn){
+    private boolean isUserPawn(Pawns pawn) {
         return pawn.getPlayerEnum() == PlayerEnum.USER;
     }
 
-    private boolean isPawnOnSpecificLocation(List<Pawns> pawns, int newLocation){
+    public boolean isPawnOnSpecificLocation(List<Pawns> pawns, int newLocation) {
         return pawns.stream().filter(enemyPawn -> enemyPawn.getLocation() == newLocation).findFirst().isPresent();
     }
 
@@ -129,7 +125,7 @@ abstract class Round {
                 capturePawn(getUserPawns());
             }
         }
-        if (capturePawn != null ) {
+        if (capturePawn != null) {
             game.moveCapturedPawn(capturePawn); //przenieś pionek jeżeli został zbity
             capturePawn = null;
         }
@@ -146,7 +142,7 @@ abstract class Round {
     }
 
     public boolean isBonusRoll(int oldLocation, int newLocation) {
-        if ((pawn.getLocation() == 4 || pawn.getLocation() == 8 || pawn.getLocation() == 14) && oldLocation != newLocation){
+        if ((pawn.getLocation() == 4 || pawn.getLocation() == 8 || pawn.getLocation() == 14) && oldLocation != newLocation) {
             game.bonusRoll = true;
         } else {
             game.bonusRoll = false;
@@ -181,11 +177,11 @@ abstract class Round {
         return pawns.stream().filter(pawn -> canSelectedPawnChangeLocation(pawn.getLocation() + game.getRoll().getRolledNumber(), pawn)).findFirst().isPresent();
     }
 
-    private List<Pawns> getUserPawns(){
+    public List<Pawns> getUserPawns() {
         return game.getUser().getPawns();
     }
 
-    public List<Pawns> getComputerPawns(){
+    public List<Pawns> getComputerPawns() {
         return game.getComputer().getPawns();
     }
 
@@ -199,6 +195,10 @@ abstract class Round {
 
     public void setPawn(Pawns pawn) {
         this.pawn = pawn;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     abstract void specificMove(int oldLocationOfPawn);
