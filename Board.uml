@@ -3,219 +3,233 @@
   <ID>JAVA</ID>
   <OriginalElement>com.anna.szczech.royalgameofur.gui.Board</OriginalElement>
   <nodes>
-    <node x="10.5" y="178.0">com.anna.szczech.royalgameofur.gui.LocalizationOnBoard</node>
-    <node x="285.48958333333326" y="178.0">com.anna.szczech.royalgameofur.logic.round.ComputerRound</node>
-    <node x="389.74791666666664" y="257.0">com.anna.szczech.royalgameofur.logic.Roll</node>
-    <node x="134.6434895833333" y="0.0">com.anna.szczech.royalgameofur.player.PlayerEnum</node>
-    <node x="143.26041666666663" y="624.0">com.anna.szczech.royalgameofur.gui.GameBoard</node>
-    <node x="239.0184895833333" y="79.0">com.anna.szczech.royalgameofur.logic.round.Round</node>
-    <node x="494.4916666666666" y="257.0">com.anna.szczech.royalgameofur.gui.Board</node>
-    <node x="214.4270833333333" y="257.0">com.anna.szczech.royalgameofur.logic.round.PlayerRound</node>
-    <node x="131.76041666666663" y="703.0">com.anna.szczech.royalgameofur.RoyalGameOfUr</node>
-    <node x="384.24791666666664" y="396.0">com.anna.szczech.royalgameofur.logic.Game</node>
-    <node x="177.76041666666663" y="515.0">com.anna.szczech.royalgameofur.gui.Pawns</node>
-    <node x="63.95000000000002" y="257.0">com.anna.szczech.royalgameofur.player.Player</node>
+    <node x="423.97916666666674" y="1352.0">com.anna.szczech.royalgameofur.RoyalGameOfUr</node>
+    <node x="370.5" y="650.0">com.anna.szczech.royalgameofur.logic.Game</node>
+    <node x="511.1589841705915" y="911.0">com.anna.szczech.royalgameofur.gui.Pawns</node>
+    <node x="285.5" y="432.0">com.anna.szczech.royalgameofur.logic.Roll</node>
+    <node x="806.5791666666668" y="922.0">com.anna.szczech.royalgameofur.gui.LocalizationOnBoard</node>
+    <node x="598.6690465288681" y="0.0">com.anna.szczech.royalgameofur.player.PlayerEnum</node>
+    <node x="469.97916666666674" y="1273.0">com.anna.szczech.royalgameofur.gui.GameBoard</node>
+    <node x="501.71875" y="298.0">com.anna.szczech.royalgameofur.logic.round.ComputerRound</node>
+    <node x="534.3690465288681" y="133.0">com.anna.szczech.royalgameofur.logic.round.Round</node>
+    <node x="10.5" y="377.0">com.anna.szczech.royalgameofur.gui.Board</node>
+    <node x="545.4791666666667" y="1076.0">com.anna.szczech.royalgameofur.player.Player</node>
+    <node x="594.78125" y="454.0">com.anna.szczech.royalgameofur.logic.round.PlayerRound</node>
   </nodes>
   <notes />
   <edges>
-    <edge source="com.anna.szczech.royalgameofur.logic.round.PlayerRound" target="com.anna.szczech.royalgameofur.logic.round.Round">
-      <point x="0.0" y="-14.5" />
-      <point x="271.92708333333326" y="232.0" />
-      <point x="259.07747395833326" y="232.0" />
-      <point x="259.07747395833326" y="158.0" />
-      <point x="275.3309895833333" y="158.0" />
-      <point x="-5.1875" y="14.5" />
-    </edge>
     <edge source="com.anna.szczech.royalgameofur.gui.Board" target="com.anna.szczech.royalgameofur.gui.Pawns">
-      <point x="6.583333333333314" y="14.5" />
-      <point x="540.5749999999999" y="376.0" />
-      <point x="543.2416666666666" y="376.0" />
-      <point x="543.2416666666666" y="495.0" />
-      <point x="256.34374999999994" y="495.0" />
-      <point x="37.583333333333314" y="-14.5" />
+      <point x="-21.25" y="91.5" />
+      <point x="116.75" y="630.0" />
+      <point x="91.27529652886813" y="630.0" />
+      <point x="91.27529652886813" y="871.0" />
+      <point x="521.0589841705914" y="871.0" />
+      <point x="-89.10000000000014" y="-47.5" />
+    </edge>
+    <edge source="com.anna.szczech.royalgameofur.logic.round.PlayerRound" target="com.anna.szczech.royalgameofur.logic.round.Round">
+      <point x="38.33333333333337" y="-14.5" />
+      <point x="690.6145833333334" y="352.0" />
+      <point x="686.28125" y="352.0" />
+      <point x="686.28125" y="268.0" />
+      <point x="654.6815465288681" y="268.0" />
+      <point x="32.8125" y="47.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.logic.round.Round" target="com.anna.szczech.royalgameofur.logic.Game">
-      <point x="36.3125" y="14.5" />
-      <point x="316.8309895833333" y="128.0" />
-      <point x="473.5145833333333" y="128.0" />
-      <point x="473.5145833333333" y="336.0" />
-      <point x="439.54791666666665" y="336.0" />
-      <point x="15.800000000000011" y="-14.5" />
+      <point x="-54.6875" y="47.5" />
+      <point x="567.1815465288681" y="268.0" />
+      <point x="491.21875" y="268.0" />
+      <point x="491.21875" y="630.0" />
+      <point x="492.7692307692307" y="630.0" />
+      <point x="28.769230769230717" y="-80.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.gui.GameBoard" target="com.anna.szczech.royalgameofur.player.PlayerEnum">
       <point x="-50.0" y="-14.5" />
-      <point x="148.26041666666663" y="604.0" />
-      <point x="0.0" y="604.0" />
-      <point x="0.0" y="59.0" />
-      <point x="145.74348958333331" y="59.0" />
-      <point x="-44.39999999999998" y="14.5" />
+      <point x="474.97916666666674" y="1253.0" />
+      <point x="0.0" y="1253.0" />
+      <point x="0.0" y="93.0" />
+      <point x="609.7690465288681" y="93.0" />
+      <point x="-44.39999999999998" y="36.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.logic.Game" target="com.anna.szczech.royalgameofur.logic.round.PlayerRound">
-      <point x="-21.066666666666663" y="-14.5" />
-      <point x="402.68125" y="336.0" />
-      <point x="310.26041666666663" y="336.0" />
-      <point x="38.33333333333337" y="14.5" />
+      <point x="86.30769230769226" y="-80.5" />
+      <point x="550.3076923076923" y="630.0" />
+      <point x="652.28125" y="630.0" />
+      <point x="0.0" y="14.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.logic.round.ComputerRound" target="com.anna.szczech.royalgameofur.gui.Pawns">
-      <point x="-17.125" y="14.5" />
-      <point x="336.86458333333326" y="232.0" />
-      <point x="361.13886718750007" y="232.0" />
-      <point x="361.13886718750007" y="455.0" />
-      <point x="229.01041666666663" y="455.0" />
-      <point x="10.25" y="-14.5" />
+      <point x="17.125" y="14.5" />
+      <point x="587.34375" y="352.0" />
+      <point x="575.0625" y="352.0" />
+      <point x="575.0625" y="831.0" />
+      <point x="600.2589841705915" y="831.0" />
+      <point x="-9.900000000000091" y="-47.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.logic.Game" target="com.anna.szczech.royalgameofur.player.PlayerEnum">
-      <point x="21.066666666666663" y="-14.5" />
-      <point x="444.8145833333333" y="346.0" />
-      <point x="483.9916666666666" y="346.0" />
-      <point x="483.9916666666666" y="49.0" />
-      <point x="234.54348958333333" y="49.0" />
-      <point x="44.400000000000034" y="14.5" />
+      <point x="0.0" y="-80.5" />
+      <point x="464.0" y="103.0" />
+      <point x="631.969046528868" y="103.0" />
+      <point x="-22.200000000000045" y="36.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.logic.round.PlayerRound" target="com.anna.szczech.royalgameofur.gui.Pawns">
-      <point x="-38.333333333333314" y="14.5" />
-      <point x="233.59374999999997" y="376.0" />
-      <point x="243.38886718750007" y="376.0" />
-      <point x="243.38886718750007" y="445.0" />
-      <point x="222.17708333333331" y="445.0" />
-      <point x="3.4166666666666856" y="-14.5" />
+      <point x="38.33333333333337" y="14.5" />
+      <point x="690.6145833333334" y="630.0" />
+      <point x="678.7389866416651" y="630.0" />
+      <point x="678.7389866416651" y="851.0" />
+      <point x="620.0589841705914" y="851.0" />
+      <point x="9.899999999999977" y="-47.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.logic.Game" target="com.anna.szczech.royalgameofur.gui.Board">
-      <point x="31.599999999999994" y="-14.5" />
-      <point x="455.3479166666666" y="366.0" />
-      <point x="514.2416666666666" y="366.0" />
-      <point x="-19.75" y="14.5" />
+      <point x="-71.92307692307702" y="-80.5" />
+      <point x="392.076923076923" y="620.0" />
+      <point x="201.75" y="620.0" />
+      <point x="63.75" y="91.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.logic.Game" target="com.anna.szczech.royalgameofur.gui.Pawns">
-      <point x="0.0" y="14.5" />
-      <point x="423.74791666666664" y="485.0" />
-      <point x="249.51041666666663" y="485.0" />
-      <point x="30.75" y="-14.5" />
+      <point x="80.14285714285711" y="80.5" />
+      <point x="544.1428571428571" y="841.0" />
+      <point x="580.4589841705915" y="841.0" />
+      <point x="-29.700000000000045" y="-47.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.logic.round.PlayerRound" target="com.anna.szczech.royalgameofur.logic.round.ComputerRound">
-      <point x="38.333333333333314" y="-14.5" />
-      <point x="310.26041666666663" y="232.0" />
-      <point x="302.61458333333326" y="232.0" />
-      <point x="-51.375" y="14.5" />
-    </edge>
-    <edge source="com.anna.szczech.royalgameofur.gui.GameBoard" target="com.anna.szczech.royalgameofur.logic.Game">
-      <point x="30.0" y="-14.5" />
-      <point x="228.26041666666663" y="584.0" />
-      <point x="452.44791666666663" y="584.0" />
-      <point x="452.44791666666663" y="485.0" />
-      <point x="455.3479166666666" y="485.0" />
-      <point x="31.599999999999994" y="14.5" />
+      <point x="-38.33333333333337" y="-14.5" />
+      <point x="613.9479166666666" y="352.0" />
+      <point x="621.59375" y="352.0" />
+      <point x="51.375" y="14.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.logic.Game" target="com.anna.szczech.royalgameofur.logic.Roll">
-      <point x="0.0" y="-14.5" />
-      <point x="0.0" y="14.5" />
+      <point x="-14.384615384615358" y="-80.5" />
+      <point x="449.61538461538464" y="580.0" />
+      <point x="425.5" y="580.0" />
+      <point x="56.0" y="36.5" />
+    </edge>
+    <edge source="com.anna.szczech.royalgameofur.gui.GameBoard" target="com.anna.szczech.royalgameofur.logic.Game">
+      <point x="-10.0" y="-14.5" />
+      <point x="514.9791666666667" y="1213.0" />
+      <point x="415.1875555991629" y="1213.0" />
+      <point x="415.1875555991629" y="891.0" />
+      <point x="410.57142857142856" y="891.0" />
+      <point x="-53.428571428571445" y="80.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.gui.GameBoard" target="com.anna.szczech.royalgameofur.player.Player">
-      <point x="-20.0" y="-14.5" />
-      <point x="178.26041666666663" y="574.0" />
-      <point x="73.29934895833333" y="574.0" />
-      <point x="73.29934895833333" y="376.0" />
-      <point x="70.6166666666667" y="376.0" />
-      <point x="-33.333333333333314" y="14.5" />
+      <point x="20.0" y="-14.5" />
+      <point x="544.9791666666667" y="1223.0" />
+      <point x="638.4791666666667" y="1223.0" />
+      <point x="-93.0" y="58.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.logic.Game" target="com.anna.szczech.royalgameofur.player.Player">
-      <point x="-36.86666666666666" y="-14.5" />
-      <point x="386.88124999999997" y="366.0" />
-      <point x="123.95000000000002" y="366.0" />
-      <point x="20.0" y="14.5" />
+      <point x="0.0" y="80.5" />
+      <point x="464.0" y="891.0" />
+      <point x="437.1875555991629" y="891.0" />
+      <point x="437.1875555991629" y="1026.0" />
+      <point x="625.1934523809525" y="1026.0" />
+      <point x="-106.28571428571428" y="-58.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.gui.GameBoard" target="com.anna.szczech.royalgameofur.gui.Board">
-      <point x="40.0" y="-14.5" />
-      <point x="238.26041666666663" y="594.0" />
-      <point x="554.2416666666666" y="594.0" />
-      <point x="19.75" y="14.5" />
+      <point x="-40.0" y="-14.5" />
+      <point x="484.97916666666674" y="1243.0" />
+      <point x="70.27529652886813" y="1243.0" />
+      <point x="70.27529652886813" y="630.0" />
+      <point x="31.75" y="630.0" />
+      <point x="-106.25" y="91.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.gui.GameBoard" target="com.anna.szczech.royalgameofur.gui.Pawns">
       <point x="10.0" y="-14.5" />
-      <point x="208.26041666666663" y="564.0" />
-      <point x="239.26041666666663" y="564.0" />
-      <point x="20.5" y="14.5" />
+      <point x="534.9791666666667" y="1056.0" />
+      <point x="585.4089841705916" y="1056.0" />
+      <point x="-24.75" y="47.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.gui.Board" target="com.anna.szczech.royalgameofur.logic.Game">
-      <point x="-6.583333333333314" y="14.5" />
-      <point x="527.4083333333333" y="376.0" />
-      <point x="460.6145833333333" y="376.0" />
-      <point x="36.866666666666674" y="-14.5" />
+      <point x="106.25" y="91.5" />
+      <point x="244.25" y="610.0" />
+      <point x="406.46153846153845" y="610.0" />
+      <point x="-57.53846153846155" y="-80.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.logic.round.Round" target="com.anna.szczech.royalgameofur.gui.Pawns">
-      <point x="-36.3125" y="14.5" />
-      <point x="244.2059895833333" y="128.0" />
-      <point x="197.09374999999997" y="128.0" />
-      <point x="197.09374999999997" y="455.0" />
-      <point x="208.51041666666663" y="455.0" />
-      <point x="-10.25" y="-14.5" />
+      <point x="76.5625" y="47.5" />
+      <point x="698.4315465288681" y="248.0" />
+      <point x="731.28125" y="248.0" />
+      <point x="731.28125" y="871.0" />
+      <point x="659.6589841705916" y="871.0" />
+      <point x="49.5" y="-47.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.player.Player" target="com.anna.szczech.royalgameofur.gui.LocalizationOnBoard">
-      <point x="0.0" y="-14.5" />
-      <point x="103.95000000000002" y="232.0" />
-      <point x="121.10000000000002" y="232.0" />
-      <point x="31.600000000000023" y="14.5" />
+      <point x="106.28571428571428" y="-58.5" />
+      <point x="837.764880952381" y="1056.0" />
+      <point x="853.9791666666667" y="1056.0" />
+      <point x="-31.600000000000023" y="36.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.gui.GameBoard" target="com.anna.szczech.royalgameofur.gui.LocalizationOnBoard">
-      <point x="-40.0" y="-14.5" />
-      <point x="158.26041666666663" y="594.0" />
-      <point x="40.049348958333326" y="594.0" />
-      <point x="40.049348958333326" y="232.0" />
-      <point x="26.30000000000001" y="232.0" />
-      <point x="-63.19999999999999" y="14.5" />
+      <point x="50.0" y="-14.5" />
+      <point x="574.9791666666667" y="1253.0" />
+      <point x="937.9791666666667" y="1253.0" />
+      <point x="937.9791666666667" y="1056.0" />
+      <point x="948.7791666666667" y="1056.0" />
+      <point x="63.19999999999999" y="36.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.gui.Pawns" target="com.anna.szczech.royalgameofur.logic.Game">
-      <point x="17.083333333333314" y="-14.5" />
-      <point x="235.84374999999994" y="465.0" />
-      <point x="392.1479166666667" y="465.0" />
-      <point x="-31.599999999999994" y="14.5" />
+      <point x="-69.30000000000007" y="-47.5" />
+      <point x="540.8589841705914" y="861.0" />
+      <point x="490.71428571428567" y="861.0" />
+      <point x="26.714285714285666" y="80.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.logic.round.Round" target="com.anna.szczech.royalgameofur.player.PlayerEnum">
-      <point x="0.0" y="-14.5" />
-      <point x="280.5184895833333" y="59.0" />
-      <point x="212.34348958333334" y="59.0" />
-      <point x="22.200000000000045" y="14.5" />
+      <point x="0.0" y="-47.5" />
+      <point x="621.8690465288681" y="113.0" />
+      <point x="654.1690465288681" y="113.0" />
+      <point x="0.0" y="36.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.player.Player" target="com.anna.szczech.royalgameofur.gui.Pawns">
-      <point x="6.666666666666686" y="14.5" />
-      <point x="110.6166666666667" y="376.0" />
-      <point x="108.39837239583329" y="376.0" />
-      <point x="108.39837239583329" y="485.0" />
-      <point x="188.01041666666669" y="485.0" />
-      <point x="-30.749999999999943" y="-14.5" />
+      <point x="-53.14285714285711" y="-58.5" />
+      <point x="678.3363095238096" y="1056.0" />
+      <point x="634.9089841705916" y="1056.0" />
+      <point x="24.75" y="47.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.logic.round.ComputerRound" target="com.anna.szczech.royalgameofur.logic.round.Round">
-      <point x="-34.24999999999997" y="-14.5" />
-      <point x="319.7395833333333" y="158.0" />
-      <point x="285.7059895833333" y="158.0" />
-      <point x="5.1875" y="14.5" />
+      <point x="34.25" y="-14.5" />
+      <point x="604.46875" y="278.0" />
+      <point x="610.9315465288681" y="278.0" />
+      <point x="-10.9375" y="47.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.gui.Pawns" target="com.anna.szczech.royalgameofur.player.PlayerEnum">
-      <point x="-23.91666666666663" y="-14.5" />
-      <point x="194.84375" y="475.0" />
-      <point x="179.0" y="475.0" />
-      <point x="179.0" y="59.0" />
-      <point x="167.9434895833333" y="59.0" />
-      <point x="-22.19999999999999" y="14.5" />
-    </edge>
-    <edge source="com.anna.szczech.royalgameofur.logic.Game" target="com.anna.szczech.royalgameofur.logic.round.ComputerRound">
-      <point x="-15.800000000000011" y="-14.5" />
-      <point x="407.94791666666663" y="326.0" />
-      <point x="373.98124999999993" y="326.0" />
-      <point x="373.98124999999993" y="232.0" />
-      <point x="371.11458333333326" y="232.0" />
-      <point x="17.125" y="14.5" />
+      <point x="69.29999999999995" y="-47.5" />
+      <point x="679.4589841705915" y="881.0" />
+      <point x="747.5" y="881.0" />
+      <point x="747.5" y="113.0" />
+      <point x="676.3690465288681" y="113.0" />
+      <point x="22.200000000000045" y="36.5" />
     </edge>
     <edge source="com.anna.szczech.royalgameofur.RoyalGameOfUr" target="com.anna.szczech.royalgameofur.gui.GameBoard">
-      <point x="-33.25" y="-14.5" />
-      <point x="165.01041666666663" y="678.0" />
-      <point x="170.76041666666663" y="678.0" />
-      <point x="-27.5" y="14.5" />
+      <point x="50.5" y="-25.5" />
+      <point x="575.4791666666667" y="1327.0" />
+      <point x="552.4791666666667" y="1327.0" />
+      <point x="27.5" y="14.5" />
+    </edge>
+    <edge source="com.anna.szczech.royalgameofur.logic.Game" target="com.anna.szczech.royalgameofur.logic.round.ComputerRound">
+      <point x="43.15384615384619" y="-80.5" />
+      <point x="507.1538461538462" y="600.0" />
+      <point x="542.09375" y="600.0" />
+      <point x="542.09375" y="352.0" />
+      <point x="518.84375" y="352.0" />
+      <point x="-51.375" y="14.5" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0214716525934862" x="404.088839941263" y="312.3636041568257" />
-  <SelectedNodes />
+  <settings layout="Hierarchic Group" zoom="0.5553191489361703" x="337.3698816710753" y="633.0268428754345" />
+  <SelectedNodes>
+    <node>com.anna.szczech.royalgameofur.RoyalGameOfUr</node>
+    <node>com.anna.szczech.royalgameofur.logic.Game</node>
+    <node>com.anna.szczech.royalgameofur.gui.Pawns</node>
+    <node>com.anna.szczech.royalgameofur.logic.Roll</node>
+    <node>com.anna.szczech.royalgameofur.gui.LocalizationOnBoard</node>
+    <node>com.anna.szczech.royalgameofur.player.PlayerEnum</node>
+    <node>com.anna.szczech.royalgameofur.gui.GameBoard</node>
+    <node>com.anna.szczech.royalgameofur.logic.round.ComputerRound</node>
+    <node>com.anna.szczech.royalgameofur.logic.round.Round</node>
+    <node>com.anna.szczech.royalgameofur.gui.Board</node>
+    <node>com.anna.szczech.royalgameofur.player.Player</node>
+    <node>com.anna.szczech.royalgameofur.logic.round.PlayerRound</node>
+  </SelectedNodes>
   <Categories>
+    <Category>Fields</Category>
     <Category>Inner Classes</Category>
   </Categories>
   <SCOPE>Project Files</SCOPE>

@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'com.AnnaSzczech'
+group 'com.anna.szczech'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
@@ -13,8 +13,6 @@ repositories {
 
 dependencies {
     // External dependencies
-    implementation('org.springframework.boot:spring-boot-starter-web')
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
 
     // Test dependencies
     testCompile('junit:junit:4.12')

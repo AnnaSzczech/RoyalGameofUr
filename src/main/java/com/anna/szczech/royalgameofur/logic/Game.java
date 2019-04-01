@@ -1,6 +1,7 @@
 package com.anna.szczech.royalgameofur.logic;
 
 import com.anna.szczech.royalgameofur.gui.Board;
+import com.anna.szczech.royalgameofur.gui.Field;
 import com.anna.szczech.royalgameofur.gui.Pawns;
 import com.anna.szczech.royalgameofur.logic.round.ComputerRound;
 import com.anna.szczech.royalgameofur.logic.round.PlayerRound;
@@ -119,9 +120,15 @@ public class Game {
         board.moveFromTheGameBoard(pawn, user.getPoints(), computer.getPoints(), user.isPlayerTurn());
     }
 
-    public void changePawnLocalizationOnBoard(Player players, Pawns pawn) {
-        pawn.setLayoutX(players.getLocalizationOnBoard().entrySet().stream().filter(n -> n.getValue() == pawn.getLocation()).map(n -> n.getKey().getX()).findFirst().get());
-        pawn.setLayoutY(players.getLocalizationOnBoard().entrySet().stream().filter(n -> n.getValue() == pawn.getLocation()).map(n -> n.getKey().getY()).findFirst().get());
+    public void changePawnLocalizationOnBoard(Pawns pawn) {
+        int location = pawn.getLocation();
+        PlayerEnum playerEnum = pawn.getPlayerEnum();
+        if (location > 4 && location < 13) {
+            playerEnum = null;
+        }
+        Field changedField = Field.getFieldFor(location, playerEnum);
+        pawn.setLayoutX(changedField.getX());
+        pawn.setLayoutY(changedField.getY());
     }
 
     public boolean isUserTurn(){

@@ -96,9 +96,9 @@ abstract class Round {
             moveToWin();
         } else {
             if (game.isUserTurn()) {
-                game.changePawnLocalizationOnBoard(game.getUser(), pawn);
+                game.changePawnLocalizationOnBoard(pawn);
             } else {
-                game.changePawnLocalizationOnBoard(game.getComputer(), pawn);
+                game.changePawnLocalizationOnBoard(pawn);
             }
             if (isPawnInTheBox(oldLocation)) {
                 movePawnFromBoxToGameBoard();
