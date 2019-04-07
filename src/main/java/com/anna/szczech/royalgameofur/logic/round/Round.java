@@ -1,6 +1,6 @@
 package com.anna.szczech.royalgameofur.logic.round;
 
-import com.anna.szczech.royalgameofur.gui.Pawns;
+import com.anna.szczech.royalgameofur.gui.Pawn;
 import com.anna.szczech.royalgameofur.logic.Game;
 import com.anna.szczech.royalgameofur.player.PlayerEnum;
 
@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 abstract class Round {
-    private Pawns pawn;
-    private Pawns capturePawn = null;
+    private Pawn pawn;
+    private Pawn capturePawn = null;
     private Game game;
 
     public void newRound() {
@@ -30,7 +30,7 @@ abstract class Round {
         specificMove(oldLocation);
     }
 
-    private boolean canSelectedPawnChangeLocation(int newLocation, Pawns pawn) {
+    private boolean canSelectedPawnChangeLocation(int newLocation, Pawn pawn) {
         return (!isPawnOffTheBordAfterMove(newLocation) && isTheFieldFree(newLocation) && pawn.getPlayerEnum() == game.whoseTurn() && !isEnemyOnSafeSpot(newLocation));
     }
 
@@ -39,7 +39,7 @@ abstract class Round {
     }
 
     private boolean isTheFieldFree(int location) {
-        List<Pawns> pawns = whichListOfPawnIsTurn();
+        List<Pawn> pawns = whichListOfPawnIsTurn();
         if (location == 15) {
             return true;
         }
@@ -58,16 +58,16 @@ abstract class Round {
         return isEnemyOnSafeSpot;
     }
 
-    private boolean isUserPawn(Pawns pawn) {
+    private boolean isUserPawn(Pawn pawn) {
         return pawn.getPlayerEnum() == PlayerEnum.USER;
     }
 
-    public boolean isPawnOnSpecificLocation(List<Pawns> pawns, int newLocation) {
+    public boolean isPawnOnSpecificLocation(List<Pawn> pawns, int newLocation) {
         return pawns.stream().filter(enemyPawn -> enemyPawn.getLocation() == newLocation).findFirst().isPresent();
     }
 
-    private List<Pawns> whichListOfPawnIsTurn() {
-        List<Pawns> pawns;
+    private List<Pawn> whichListOfPawnIsTurn() {
+        List<Pawn> pawns;
         if (isUserPawn(pawn)) {
             pawns = getUserPawns();
         } else {
@@ -131,13 +131,13 @@ abstract class Round {
         }
     }
 
-    private void capturePawn(List<Pawns> pawns) {
+    private void capturePawn(List<Pawn> pawns) {
         if (isPawnToCapture(pawns)) {
             capturePawn = pawns.stream().filter(enemyPawn -> enemyPawn.getLocation() == pawn.getLocation()).findFirst().get();
         }
     }
 
-    private boolean isPawnToCapture(List<Pawns> pawns) {
+    private boolean isPawnToCapture(List<Pawn> pawns) {
         return (isPawnOnSpecificLocation(pawns, pawn.getLocation()));
     }
 
@@ -172,20 +172,20 @@ abstract class Round {
         if (pawn.getPlayerEnum() != game.whoseTurn()) {
             return true;
         }
-        List<Pawns> pawns = whichListOfPawnIsTurn();
+        List<Pawn> pawns = whichListOfPawnIsTurn();
         pawns = pawns.stream().filter(pawn -> pawn.getLocation() < 15).collect(Collectors.toList());
         return pawns.stream().filter(pawn -> canSelectedPawnChangeLocation(pawn.getLocation() + game.getRoll().getRolledNumber(), pawn)).findFirst().isPresent();
     }
 
-    public List<Pawns> getUserPawns() {
+    public List<Pawn> getUserPawns() {
         return game.getUser().getPawns();
     }
 
-    public List<Pawns> getComputerPawns() {
+    public List<Pawn> getComputerPawns() {
         return game.getComputer().getPawns();
     }
 
-    public Pawns getPawn() {
+    public Pawn getPawn() {
         return pawn;
     }
 
@@ -193,7 +193,7 @@ abstract class Round {
         return game;
     }
 
-    public void setPawn(Pawns pawn) {
+    public void setPawn(Pawn pawn) {
         this.pawn = pawn;
     }
 

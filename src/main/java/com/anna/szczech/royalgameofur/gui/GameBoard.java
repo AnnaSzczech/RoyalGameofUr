@@ -14,10 +14,10 @@ public class GameBoard {
     public GameBoard(Pane pane){
         Image whitePawnImage = new Image("file:src/main/resources/white.png");
         Image blackPawnImage = new Image("file:src/main/resources/black.png");
-        Board gameBoard = new Board(pane);
+        Board gameBoard = new Board(pane, new PaneChildrenFactory());
         Game game = new Game();
-        List<Pawns> userPawns = createPawns(whitePawnImage, PlayerEnum.USER, game);
-        List<Pawns> computerPawns = createPawns(blackPawnImage, PlayerEnum.COMPUTER, game);
+        List<Pawn> userPawns = createPawns(whitePawnImage, PlayerEnum.USER, game);
+        List<Pawn> computerPawns = createPawns(blackPawnImage, PlayerEnum.COMPUTER, game);
         Player computer = new Player(computerPawns);
         Player user = new Player(userPawns);
 
@@ -25,11 +25,11 @@ public class GameBoard {
         gameBoard.createBoard(game);
     }
 
-    private List<Pawns> createPawns(Image image, PlayerEnum playerEnum, Game game){
+    private List<Pawn> createPawns(Image image, PlayerEnum playerEnum, Game game){
         int numberOfPawns = 7;
-        List<Pawns> pawns = new ArrayList<>();
+        List<Pawn> pawns = new ArrayList<>();
         for (int i = 0; i < numberOfPawns; i++){
-            Pawns pawn = new Pawns(image, playerEnum, game);
+            Pawn pawn = new Pawn(image, playerEnum, game);
             pawns.add(pawn);
         }
         return pawns;

@@ -19,14 +19,14 @@ public enum Field {
     FIELD_13_COMPUTER(1117, 513, 13, PlayerEnum.COMPUTER),
     FIELD_14_COMPUTER(1018, 513, 14, PlayerEnum.COMPUTER),
 
-    FIELD_5(423, 415, 5, null),
-    FIELD_6(523, 415, 6, null),
-    FIELD_7(620, 415, 7, null),
-    FIELD_8(720, 415, 8, null),
-    FIELD_9(820, 415, 9, null),
-    FIELD_10(918, 415, 10, null),
-    FIELD_11(1018, 415, 11, null),
-    FIELD_12(1117, 415, 12, null);
+    FIELD_5(423, 415, 5, PlayerEnum.ALL_PLAYERS),
+    FIELD_6(523, 415, 6, PlayerEnum.ALL_PLAYERS),
+    FIELD_7(620, 415, 7, PlayerEnum.ALL_PLAYERS),
+    FIELD_8(720, 415, 8, PlayerEnum.ALL_PLAYERS),
+    FIELD_9(820, 415, 9, PlayerEnum.ALL_PLAYERS),
+    FIELD_10(918, 415, 10, PlayerEnum.ALL_PLAYERS),
+    FIELD_11(1018, 415, 11, PlayerEnum.ALL_PLAYERS),
+    FIELD_12(1117, 415, 12, PlayerEnum.ALL_PLAYERS);
 
     private double x;
     private double y;

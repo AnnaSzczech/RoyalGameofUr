@@ -1,12 +1,10 @@
 package com.anna.szczech.royalgameofur.gui;
 
 import com.anna.szczech.royalgameofur.logic.Game;
-import javafx.geometry.Orientation;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.control.Label;
 
 import java.util.List;
@@ -20,19 +18,24 @@ public class Board {
     public Label messageLabel;
     private FlowPane boxWithPlayerPawns;
     private FlowPane boxWithComputerPawns;
+    private PaneChildrenFactory paneChildrenFactory;
 
-    public Board(Pane pane){
+    public Board(Pane pane, PaneChildrenFactory paneChildrenFactory){
         this.pane = pane;
+        this.paneChildrenFactory = paneChildrenFactory;
     }
 
     public void createBoard(Game game){
         game.getUser().changeTurn();
-        resultLabel = createNewLabel(String.valueOf(resultForAllPlayers(game.getUser().getPoints(), game.getComputer().getPoints())), 500, 120, 40);
-        createMessageLabel();
-        createNewRoundButton(game);
-        createRollButton(game);
+        resultLabel = paneChildrenFactory.createNewLabel(String.valueOf(resultForAllPlayers(game.getUser().getPoints(), game.getComputer().getPoints())), 500, 120, 40);
+        addMessageLabel();
+        addNewRoundButton(game);
+        addRollButton(game);
         createBoxesWithPlayersPawns(game);
-        pane.getChildren().add(getResultLabel());
+        addToPane(getResultLabel());
+    }
+    private void addToPane(Node node){
+        pane.getChildren().add(node);
     }
 
     public String resultForAllPlayers(int userPoints, int computerPoints){
@@ -40,63 +43,38 @@ public class Board {
                 + userPoints + "  :  " + computerPoints;
     }
 
-    private void createRollButton(Game game){
-        Button rollButton = createNewButton("ROLL DICE", 650, 660);
-        rolledNumberLabel = createNewLabel("", 790, 650, 35);
+    private void addRollButton(Game game){
+        Button rollButton = paneChildrenFactory.createNewButton("ROLL DICE", 650, 660);
+        rolledNumberLabel = paneChildrenFactory.createNewLabel("", 790, 650, 35);
         rollButton.setOnAction(event -> {
             game.makeARoll(this);
         });
-        pane.getChildren().add(rolledNumberLabel);
-        pane.getChildren().add(rollButton);
+        addToPane(rolledNumberLabel);
+        addToPane(rollButton);
     }
 
     private void createBoxesWithPlayersPawns(Game game){
-        boxWithPlayerPawns = createBoxWithPawns(150, game.getUser().getPawns());
-        boxWithComputerPawns = createBoxWithPawns(1350, game.getComputer().getPawns());
+        boxWithPlayerPawns = paneChildrenFactory.createFlowPane(150, 150, 616);
+        addPawnsToBox(boxWithPlayerPawns, game.getUser().getPawns());
+        boxWithComputerPawns = paneChildrenFactory.createFlowPane(1350, 150, 616);
+        addPawnsToBox(boxWithComputerPawns, game.getComputer().getPawns());
     }
 
-    private FlowPane createBoxWithPawns(double x, List<Pawns> pawns){
-        FlowPane boxWithPawns = new FlowPane(Orientation.VERTICAL);
-        boxWithPawns.setLayoutX(x);
-        boxWithPawns.setLayoutY(150);
-        boxWithPawns.setMinHeight(616);
-        addPawnsToBox(boxWithPawns, pawns);
-        return boxWithPawns;
-    }
-
-    private void addPawnsToBox(FlowPane box, List<Pawns> pawns){
+    private void addPawnsToBox(FlowPane box, List<Pawn> pawns){
         pawns.stream().forEach((n) -> box.getChildren().add(n));
-        pane.getChildren().add(box);
+        addToPane(box);
     }
 
-    private void createMessageLabel(){
-        messageLabel = createNewLabel("", 600, 720, 35);
-        pane.getChildren().add(messageLabel);
+    private void addMessageLabel(){
+        messageLabel = paneChildrenFactory.createNewLabel("", 600, 720, 35);
+        addToPane(messageLabel);
     }
 
-    private void createNewRoundButton(Game game){
-        newRoundButton = createNewButton("NEW ROUND", 450.0, 660.0);
+    private void addNewRoundButton(Game game){
+        newRoundButton = paneChildrenFactory.createNewButton("NEW ROUND", 450.0, 660.0);
         newRoundButton.setVisible(false);
         newRoundButton.setOnAction(event -> game.startNewRound());
-        pane.getChildren().add(newRoundButton);
-    }
-
-    private Button createNewButton(String name, double x, double y){
-        Button button = new Button(name);
-        button.setLayoutX(x);
-        button.setLayoutY(y);
-        button.setScaleX(2);
-        button.setScaleY(2);
-        return button;
-    }
-
-    private Label createNewLabel(String name, double x, double y, int fontSize){
-        Label label = new Label(name);
-        label.setLayoutX(x);
-        label.setLayoutY(y);
-        label.setFont(new Font(fontSize));
-        label.setTextFill(Color.web("#FFF"));
-        return label;
+        addToPane(newRoundButton);
     }
 
     public Label getResultLabel() {
@@ -107,7 +85,7 @@ public class Board {
         resultLabel.setText(resultForAllPlayers(userPoints, computePoints));
     }
 
-    public void movePawnFromBoxToGameBoard(Pawns pawn, boolean isUserPawn) {
+    public void movePawnFromBoxToGameBoard(Pawn pawn, boolean isUserPawn) {
         FlowPane boxWithPawns;
         if (isUserPawn) {
             boxWithPawns = boxWithPlayerPawns;
@@ -115,16 +93,16 @@ public class Board {
             boxWithPawns = boxWithComputerPawns;
         }
         boxWithPawns.getChildren().remove(pawn);
-        pane.getChildren().add(pawn);
+        addToPane(pawn);
     }
 
-    public void movePawnIfCaptured(Pawns capturePawn, boolean isUserPawn) {
+    public void movePawnIfCaptured(Pawn capturePawn, boolean isUserPawn) {
         if (capturePawn != null) {
             movePawnFromGameBoardToBoxWithPawns(capturePawn, isUserPawn);
         }
     }
 
-    private void movePawnFromGameBoardToBoxWithPawns(Pawns capturePawn, boolean isUserPawn) {
+    private void movePawnFromGameBoardToBoxWithPawns(Pawn capturePawn, boolean isUserPawn) {
         capturePawn.setLocation(0);
         pane.getChildren().remove(capturePawn);
         if (isUserPawn) {
@@ -134,7 +112,7 @@ public class Board {
         }
     }
 
-    public void moveFromTheGameBoard(Pawns pawn, int userPoints, int computerPoints, boolean isPlayerTurn){
+    public void moveFromTheGameBoard(Pawn pawn, int userPoints, int computerPoints, boolean isPlayerTurn){
         pawn.setScaleX(0.5);
         pawn.setScaleY(0.5);
         if (isPlayerTurn) {

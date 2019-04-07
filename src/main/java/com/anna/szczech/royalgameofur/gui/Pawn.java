@@ -6,14 +6,12 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Pawns extends Label {
+public class Pawn extends Label {
     private int location = 0;
     private PlayerEnum playerEnum;
-    private Game game;
 
-    public Pawns(Image image, PlayerEnum playerEnum, Game game) {
+    public Pawn(Image image, PlayerEnum playerEnum, Game game) {
         super("", new ImageView(image));
-        this.game = game;
         this.playerEnum = playerEnum;
         this.setOnMouseClicked(event -> game.movePawn(this));
     }
@@ -28,9 +26,5 @@ public class Pawns extends Label {
 
     public PlayerEnum getPlayerEnum() {
         return playerEnum;
-    }
-
-    public Game getGame() {
-        return game;
     }
 }

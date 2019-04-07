@@ -1,18 +1,18 @@
 package com.anna.szczech.royalgameofur.player;
 
-import com.anna.szczech.royalgameofur.gui.Pawns;
+import com.anna.szczech.royalgameofur.gui.Pawn;
 import java.util.List;
 
 public class Player {
-    private List<Pawns> pawns;
+    private List<Pawn> pawns;
     private int points = 0;
     private boolean isPlayerTurn = false;
 
-    public Player(List<Pawns> pawns) {
+    public Player(List<Pawn> pawns) {
         this.pawns = pawns;
     }
 
-    public List<Pawns> getPawns() {
+    public List<Pawn> getPawns() {
         return pawns;
     }
 
