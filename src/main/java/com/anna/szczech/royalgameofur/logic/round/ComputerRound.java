@@ -3,6 +3,7 @@ package com.anna.szczech.royalgameofur.logic.round;
 import com.anna.szczech.royalgameofur.gui.Pawn;
 import com.anna.szczech.royalgameofur.logic.Game;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,10 +55,14 @@ public class ComputerRound extends Round {
 
     private Pawn moveToBonusRoll(List<Pawn> pawns) {
         Pawn pawn = null;
-        pawn = lookForPerfectLocation(pawn, pawns, 8);
-        pawn = lookForPerfectLocation(pawn, pawns, 14);
-        pawn = lookForPerfectLocation(pawn, pawns, 4);
-        pawn = lookForPerfectLocation(pawn, pawns, 15);
+        List<Integer> locations = new ArrayList<>();
+        locations.add(8);
+        locations.add(14);
+        locations.add(4);
+        locations.add(15);
+        for (int location : locations){
+            pawn = lookForPerfectLocation(pawn, pawns, location);
+        }
         return pawn;
     }
 

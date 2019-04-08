@@ -68,7 +68,7 @@ public class Game {
             computer.changeTurn();
             board.newRoundButton.setVisible(false);
             ComputerRound computerRound = new ComputerRound(this);
-            computerRound.newRound();
+            createNewComputerRound(computerRound);
         }
     }
 
