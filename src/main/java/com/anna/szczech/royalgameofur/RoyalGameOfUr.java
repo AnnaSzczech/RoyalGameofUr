@@ -19,7 +19,8 @@ public class RoyalGameOfUr extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         Pane pane = new Pane();
-        GameBoard gameBoard = new GameBoard(pane);
+        GameBoard gameBoard = new GameBoard();
+        gameBoard.createBoard(pane);
 
         pane.setBackground(createBackground());
         Scene scene = new Scene(pane, 1600, 900, Color.BLACK);

@@ -18,16 +18,14 @@ public class Board {
     public Label messageLabel;
     private FlowPane boxWithPlayerPawns;
     private FlowPane boxWithComputerPawns;
-    private PaneChildrenFactory paneChildrenFactory;
 
-    public Board(Pane pane, PaneChildrenFactory paneChildrenFactory){
+    public Board(Pane pane){
         this.pane = pane;
-        this.paneChildrenFactory = paneChildrenFactory;
     }
 
     public void createBoard(Game game){
         game.getUser().changeTurn();
-        resultLabel = paneChildrenFactory.createNewLabel(String.valueOf(resultForAllPlayers(game.getUser().getPoints(), game.getComputer().getPoints())), 500, 120, 40);
+        resultLabel = PaneChildrenFactory.createNewLabel(String.valueOf(resultForAllPlayers(game.getUser().getPoints(), game.getComputer().getPoints())), 500, 120, 40);
         addMessageLabel();
         addNewRoundButton(game);
         addRollButton(game);
@@ -44,8 +42,8 @@ public class Board {
     }
 
     private void addRollButton(Game game){
-        Button rollButton = paneChildrenFactory.createNewButton("ROLL DICE", 650, 660);
-        rolledNumberLabel = paneChildrenFactory.createNewLabel("", 790, 650, 35);
+        Button rollButton = PaneChildrenFactory.createNewButton("ROLL DICE", 650, 660);
+        rolledNumberLabel = PaneChildrenFactory.createNewLabel("", 790, 650, 35);
         rollButton.setOnAction(event -> {
             game.makeARoll(this);
         });
@@ -54,9 +52,9 @@ public class Board {
     }
 
     private void createBoxesWithPlayersPawns(Game game){
-        boxWithPlayerPawns = paneChildrenFactory.createFlowPane(150, 150, 616);
+        boxWithPlayerPawns = PaneChildrenFactory.createFlowPane(150, 150, 616);
         addPawnsToBox(boxWithPlayerPawns, game.getUser().getPawns());
-        boxWithComputerPawns = paneChildrenFactory.createFlowPane(1350, 150, 616);
+        boxWithComputerPawns = PaneChildrenFactory.createFlowPane(1350, 150, 616);
         addPawnsToBox(boxWithComputerPawns, game.getComputer().getPawns());
     }
 
@@ -66,12 +64,12 @@ public class Board {
     }
 
     private void addMessageLabel(){
-        messageLabel = paneChildrenFactory.createNewLabel("", 600, 720, 35);
+        messageLabel = PaneChildrenFactory.createNewLabel("", 600, 720, 35);
         addToPane(messageLabel);
     }
 
     private void addNewRoundButton(Game game){
-        newRoundButton = paneChildrenFactory.createNewButton("NEW ROUND", 450.0, 660.0);
+        newRoundButton = PaneChildrenFactory.createNewButton("NEW ROUND", 450.0, 660.0);
         newRoundButton.setVisible(false);
         newRoundButton.setOnAction(event -> game.startNewRound());
         addToPane(newRoundButton);

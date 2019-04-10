@@ -10,28 +10,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameBoard {
+    private Game game;
 
-    public GameBoard(Pane pane){
-        Image whitePawnImage = new Image("file:src/main/resources/white.png");
-        Image blackPawnImage = new Image("file:src/main/resources/black.png");
-        Board gameBoard = new Board(pane, new PaneChildrenFactory());
-        Game game = new Game();
-        List<Pawn> userPawns = createPawns(whitePawnImage, PlayerEnum.USER, game);
-        List<Pawn> computerPawns = createPawns(blackPawnImage, PlayerEnum.COMPUTER, game);
-        Player computer = new Player(computerPawns);
-        Player user = new Player(userPawns);
+    public GameBoard(){
+        game = new Game();
+    }
 
+    public void createBoard(Pane pane){
+        Board gameBoard = new Board(pane);
+        Player computer = createComputerPlayer();
+        Player user = createUserPlayer();
         game.addUserAndComputer(user, computer);
         gameBoard.createBoard(game);
     }
 
-    private List<Pawn> createPawns(Image image, PlayerEnum playerEnum, Game game){
+    private Player createUserPlayer(){
+        Image whitePawnImage = new Image("file:src/main/resources/white.png");
+        List<Pawn> userPawns = createPawns(whitePawnImage, PlayerEnum.USER);
+        return new Player(userPawns);
+    }
+
+    private Player createComputerPlayer(){
+        Image blackPawnImage = new Image("file:src/main/resources/black.png");
+        List<Pawn> computerPawns = createPawns(blackPawnImage, PlayerEnum.COMPUTER);
+        return new Player(computerPawns);
+    }
+
+    private List<Pawn> createPawns(Image image, PlayerEnum playerEnum){
         int numberOfPawns = 7;
         List<Pawn> pawns = new ArrayList<>();
         for (int i = 0; i < numberOfPawns; i++){
-            Pawn pawn = new Pawn(image, playerEnum, game);
-            pawns.add(pawn);
+            pawns.add(createPawn(image, playerEnum));
         }
         return pawns;
+    }
+
+    private Pawn createPawn(Image image, PlayerEnum playerEnum){
+        Pawn pawn = new Pawn(image, playerEnum);
+        pawn.setOnMouseClicked(event -> game.movePawn(pawn));
+        return pawn;
     }
 }

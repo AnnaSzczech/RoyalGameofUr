@@ -7,11 +7,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-import java.util.List;
-
 public class PaneChildrenFactory {
 
-    public Button createNewButton(String name, double x, double y){
+    public static Button createNewButton(String name, double x, double y){
         Button button = new Button(name);
         button.setLayoutX(x);
         button.setLayoutY(y);
@@ -20,7 +18,7 @@ public class PaneChildrenFactory {
         return button;
     }
 
-    public Label createNewLabel(String name, double x, double y, int fontSize){
+    public static Label createNewLabel(String name, double x, double y, int fontSize){
         Label label = new Label(name);
         label.setLayoutX(x);
         label.setLayoutY(y);
@@ -29,7 +27,7 @@ public class PaneChildrenFactory {
         return label;
     }
 
-    public FlowPane createFlowPane(double x, double y, double minHeight){
+    public static FlowPane createFlowPane(double x, double y, double minHeight){
         FlowPane boxWithPawns = new FlowPane(Orientation.VERTICAL);
         boxWithPawns.setLayoutX(x);
         boxWithPawns.setLayoutY(y);

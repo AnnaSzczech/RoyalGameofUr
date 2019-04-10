@@ -1,6 +1,5 @@
 package com.anna.szczech.royalgameofur.gui;
 
-import com.anna.szczech.royalgameofur.logic.Game;
 import com.anna.szczech.royalgameofur.player.PlayerEnum;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -10,10 +9,9 @@ public class Pawn extends Label {
     private int location = 0;
     private PlayerEnum playerEnum;
 
-    public Pawn(Image image, PlayerEnum playerEnum, Game game) {
+    public Pawn(Image image, PlayerEnum playerEnum) {
         super("", new ImageView(image));
         this.playerEnum = playerEnum;
-        this.setOnMouseClicked(event -> game.movePawn(this));
     }
 
     public int getLocation() {
