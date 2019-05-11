@@ -8,6 +8,9 @@ import com.anna.szczech.royalgameofur.logic.round.PlayerRound;
 import com.anna.szczech.royalgameofur.player.Player;
 import com.anna.szczech.royalgameofur.player.PlayerEnum;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Game {
     private Roll roll = new Roll();
     private Player user;
@@ -18,8 +21,12 @@ public class Game {
 
     public void movePawn(Pawn pawn) {
         if (!isGameEnded && roll.getRolledNumber() != 0) {
-            PlayerRound playerRound = new PlayerRound(pawn, this);
+            PlayerRound playerRound = new PlayerRound(this, pawn);
             playerRound.newRound();
+            if (!user.isPlayerTurn() && !isGameEnded) {
+                resetRoll();
+                makeARoll(board);
+            }
         }
     }
 
@@ -34,27 +41,39 @@ public class Game {
         roll.diceRoll(isGameEnded);
         board.rolledNumberLabel.setText(String.valueOf(roll.getRolledNumber()));
         if (oldRolledNumber != roll.getRolledNumber()) {
-            createFakeRound();
+            checkIfThereIsAnyMove();
         }
     }
 
-    private void createFakeRound() {
-        PlayerRound playerRound = new PlayerRound(user.getPawns().get(0), this);
-        if (!playerRound.isThereAnyPossibleMove()) {
-            board.newRoundButton.setVisible(true);
-           sendMessage("There is no move to make, click NEW ROUND");
+    private void checkIfThereIsAnyMove(){
+        PosibleMoveChecker posibleMoveChecker = new PosibleMoveChecker(computer.getPawns(), user.getPawns(), roll.getRolledNumber(), isUserTurn());
+        if (!posibleMoveChecker.isThereAnyPossibleMove()){
+            if (isUserTurn()) {
+                board.newRoundButton.setVisible(true);
+                sendMessage("There is no move to make, click NEW ROUND");
+            } else {
+                System.out.println("no move 1");
+                changeTurn();
+                resetRoll();
+            }
+        } else {
+            if (!isUserTurn()) {
+                List<Pawn> userPawns = getUser().getPawns().stream()
+                        .filter(pawn -> pawn.getLocation() > 4 && pawn.getLocation() <12)
+                        .collect(Collectors.toList());
+                List<Pawn> computerPawns = getComputer().getPawns().stream()
+                        .filter(pawn -> pawn.getLocation() <15)
+                        .collect(Collectors.toList());
+                ComputePawnSelector computePawnSelector = new ComputePawnSelector(computerPawns, userPawns, this);
+                createNewComputerRound(new ComputerRound(this, computePawnSelector.selectThePawn()));
+            }
         }
+
     }
 
     public void createNewComputerRound(ComputerRound computerRound) {
-        if (computerRound.isThereAnyPossibleMove()) {
             computerRound.newRound();
-        } else {
-            System.out.println("no move 1");
-            changeTurn();
-            resetRoll();
-        }
-
+            computerRound.makeBonusRoll(computerRound.getOldLocation());
     }
 
     public void changeTurn() {
@@ -64,11 +83,10 @@ public class Game {
 
     public void startNewRound() {
         if (!isGameEnded) {
-            user.changeTurn();
-            computer.changeTurn();
+            changeTurn();
             board.newRoundButton.setVisible(false);
-            ComputerRound computerRound = new ComputerRound(this);
-            createNewComputerRound(computerRound);
+            resetRoll();
+            makeARoll(board);
         }
     }
 
@@ -106,16 +124,6 @@ public class Game {
         }
     }
 
-    public PlayerEnum whoseTurn() {
-        PlayerEnum whoseTurn;
-        if (isUserTurn()) {
-            whoseTurn = PlayerEnum.USER;
-        } else {
-            whoseTurn = PlayerEnum.COMPUTER;
-        }
-        return whoseTurn;
-    }
-
     public void moveFromTheGameBoard(Pawn pawn) {
         board.moveFromTheGameBoard(pawn, user.getPoints(), computer.getPoints(), user.isPlayerTurn());
     }
@@ -124,7 +132,7 @@ public class Game {
         int location = pawn.getLocation();
         PlayerEnum playerEnum = pawn.getPlayerEnum();
         if (location > 4 && location < 13) {
-            playerEnum = PlayerEnum.USER.ALL_PLAYERS;
+            playerEnum = PlayerEnum.ALL_PLAYERS;
         }
         Field changedField = Field.getFieldFor(location, playerEnum);
         pawn.setLayoutX(changedField.getX());
@@ -158,4 +166,9 @@ public class Game {
     public void setGameEnded(boolean gameEnded) {
         isGameEnded = gameEnded;
     }
+
+    public Board getBoard() {
+        return board;
+    }
+
 }

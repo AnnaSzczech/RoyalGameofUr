@@ -2,20 +2,28 @@ package com.anna.szczech.royalgameofur.logic.round;
 
 import com.anna.szczech.royalgameofur.gui.Pawn;
 import com.anna.szczech.royalgameofur.logic.Game;
+import com.anna.szczech.royalgameofur.logic.PosibleMoveChecker;
 import com.anna.szczech.royalgameofur.player.PlayerEnum;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 abstract class Round {
     private Pawn pawn;
-    private Pawn capturePawn = null;
+    private Pawn capturePawn;
     private Game game;
 
+    private int oldLocation;
+
+    public Round(Game game, Pawn pawn){
+        this.pawn = pawn;
+        this.game = game;
+    }
+
     public void newRound() {
-        int oldLocation = pawn.getLocation();
+        oldLocation = pawn.getLocation();
         int newLocation = oldLocation + game.getRoll().getRolledNumber();
-        if (canSelectedPawnChangeLocation(newLocation, pawn)) {
+        PosibleMoveChecker posibleMoveChecker = new PosibleMoveChecker(game.getComputer().getPawns(), game.getUser().getPawns(), game.getRoll().getRolledNumber(), game.isUserTurn());
+        if (posibleMoveChecker.canSelectedPawnChangeLocation(newLocation, pawn)) {
             movePawn(oldLocation, newLocation);
             checkIfIsEndOfTheGame();
             if (!isBonusRoll(oldLocation, newLocation)) {
@@ -27,53 +35,6 @@ abstract class Round {
         } else {
             game.sendMessage("WRONG MOVE, REPEAT");
         }
-        specificMove(oldLocation);
-    }
-
-    private boolean canSelectedPawnChangeLocation(int newLocation, Pawn pawn) {
-        return (!isPawnOffTheBordAfterMove(newLocation) && isTheFieldFree(newLocation) && pawn.getPlayerEnum() == game.whoseTurn() && !isEnemyOnSafeSpot(newLocation));
-    }
-
-    private boolean isPawnOffTheBordAfterMove(int newLocation) {
-        return newLocation > 15;
-    }
-
-    private boolean isTheFieldFree(int location) {
-        List<Pawn> pawns = whichListOfPawnIsTurn();
-        if (location == 15) {
-            return true;
-        }
-        return !(isPawnOnSpecificLocation(pawns, location));
-    }
-
-    private boolean isEnemyOnSafeSpot(int newLocation) {
-        boolean isEnemyOnSafeSpot = false;
-        if (newLocation == 8) {
-            if (isUserPawn(pawn)) {
-                isEnemyOnSafeSpot = isPawnOnSpecificLocation(getComputerPawns(), newLocation);
-            } else {
-                isEnemyOnSafeSpot = isPawnOnSpecificLocation(getUserPawns(), newLocation);
-            }
-        }
-        return isEnemyOnSafeSpot;
-    }
-
-    private boolean isUserPawn(Pawn pawn) {
-        return pawn.getPlayerEnum() == PlayerEnum.USER;
-    }
-
-    public boolean isPawnOnSpecificLocation(List<Pawn> pawns, int newLocation) {
-        return pawns.stream().filter(enemyPawn -> enemyPawn.getLocation() == newLocation).findFirst().isPresent();
-    }
-
-    private List<Pawn> whichListOfPawnIsTurn() {
-        List<Pawn> pawns;
-        if (isUserPawn(pawn)) {
-            pawns = getUserPawns();
-        } else {
-            pawns = getComputerPawns();
-        }
-        return pawns;
     }
 
     private boolean willPawnGetPoint() {
@@ -119,7 +80,7 @@ abstract class Round {
 
     private void checkIfPawnHaveToBackToTheBox() {
         if (pawn.getLocation() > 4 && pawn.getLocation() < 13) {
-            if (isUserPawn(pawn)) {
+            if (getGame().isUserPawn(pawn)) {
                 capturePawn(getComputerPawns());
             } else {
                 capturePawn(getUserPawns());
@@ -138,7 +99,8 @@ abstract class Round {
     }
 
     private boolean isPawnToCapture(List<Pawn> pawns) {
-        return (isPawnOnSpecificLocation(pawns, pawn.getLocation()));
+        PosibleMoveChecker posibleMoveChecker = new PosibleMoveChecker(game.getComputer().getPawns(), game.getUser().getPawns(), game.getRoll().getRolledNumber(), game.isUserTurn());
+        return (posibleMoveChecker.isPawnOnSpecificLocation(pawns, pawn.getLocation()));
     }
 
     public boolean isBonusRoll(int oldLocation, int newLocation) {
@@ -167,16 +129,6 @@ abstract class Round {
         return player;
     }
 
-    public boolean isThereAnyPossibleMove() {
-        // spr czy został wybrany pionek gracza którego jest kolej
-        if (pawn.getPlayerEnum() != game.whoseTurn()) {
-            return true;
-        }
-        List<Pawn> pawns = whichListOfPawnIsTurn();
-        pawns = pawns.stream().filter(pawn -> pawn.getLocation() < 15).collect(Collectors.toList());
-        return pawns.stream().filter(pawn -> canSelectedPawnChangeLocation(pawn.getLocation() + game.getRoll().getRolledNumber(), pawn)).findFirst().isPresent();
-    }
-
     public List<Pawn> getUserPawns() {
         return game.getUser().getPawns();
     }
@@ -193,13 +145,8 @@ abstract class Round {
         return game;
     }
 
-    public void setPawn(Pawn pawn) {
-        this.pawn = pawn;
+    public int getOldLocation() {
+        return oldLocation;
     }
 
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    abstract void specificMove(int oldLocationOfPawn);
 }

@@ -5,14 +5,7 @@ import com.anna.szczech.royalgameofur.logic.Game;
 
 public class PlayerRound extends Round {
 
-    public PlayerRound(Pawn pawn, Game game) {
-        setGame(game);
-        setPawn(pawn);
-    }
-    @Override
-    public void specificMove(int oldLocation){
-        if (!getGame().getUser().isPlayerTurn() && !getGame().isGameEnded()) {
-            getGame().createNewComputerRound(new ComputerRound(getGame()));
-        }
+    public PlayerRound(Game game, Pawn pawn) {
+        super(game, pawn);
     }
 }
